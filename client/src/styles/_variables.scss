@@ -1,0 +1,47 @@
+@use "sass:color";
+// Black and Lavender theme variables
+$bg-dark: #0a0a0a;
+$bg-card: #141414;
+$text-primary: #ffffff;
+$text-secondary: #e6e6fa;
+$primary-color: #9d84b7;
+$secondary-color: #b19cd9;
+$accent-color: #b19cd9;
+$border-color: #2d2d2d;
+$hover-color: #1a1a1a;
+$error-color: #d896b0;
+$success-color: #9d84b7;
+
+// Mixins
+@mixin card-hover {
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@mixin custom-scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-dark;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $accent-color;
+    border-radius: 4px;
+    
+    &:hover {
+      background: color.adjust($accent-color, $lightness: 10%);
+    }
+  }
+
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $accent-color $bg-dark;
+}

@@ -1,0 +1,72 @@
+@use '../styles/variables';
+
+.about-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  h1 {
+    color: variables.$text-primary;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .about-content {
+    background-color: variables.$bg-card;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(variables.$accent-color, 0.1);
+
+    h2 {
+      color: variables.$accent-color;
+      font-size: 1.8rem;
+      margin: 1.5rem 0;
+    }
+
+    p {
+      color: variables.$text-secondary;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .features-grid {
+      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+
+      .feature-card {
+        background-color: variables.$bg-dark;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid rgba(variables.$accent-color, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+
+        &:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 6px 12px rgba(variables.$accent-color, 0.1);
+        }
+
+        h3 {
+          color: variables.$accent-color;
+          font-size: 1.2rem;
+          margin-bottom: 0.75rem;
+        }
+
+        p {
+          color: variables.$text-secondary;
+          font-size: 1rem;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,189 @@
+.navbar {
+  background-color: #141414;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #b19cd9;
+  box-shadow: 0 2px 10px rgba(177, 156, 217, 0.1);
+  position: relative;
+  z-index: 1000;
+}
+.navbar .nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.navbar .nav-content .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #b19cd9;
+  text-shadow: 0 0 10px rgba(177, 156, 217, 0.3);
+  z-index: 2;
+}
+.navbar .nav-content .hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+.navbar .nav-content .hamburger span {
+  width: 2rem;
+  height: 0.25rem;
+  background: #b19cd9;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+.navbar .nav-content .hamburger.open span:first-child {
+  transform: rotate(45deg);
+}
+.navbar .nav-content .hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.navbar .nav-content .hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+@media (max-width: 480px) {
+  .navbar .nav-content .hamburger {
+    display: flex;
+  }
+}
+.navbar .nav-content .nav-links {
+  display: flex;
+  gap: 2rem;
+}
+@media (max-width: 480px) {
+  .navbar .nav-content .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 80%;
+    flex-direction: column;
+    padding: 5rem 1.5rem;
+    background-color: #141414;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    gap: 1rem;
+    overflow-y: auto;
+  }
+  .navbar .nav-content .nav-links.open {
+    transform: translateX(0);
+  }
+  .navbar .nav-content .nav-links .mobile-cart {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(177, 156, 217, 0.2);
+  }
+}
+.navbar .nav-content .nav-links a {
+  color: #e6e6fa;
+  text-decoration: none;
+  transition: all 0.3s;
+  position: relative;
+}
+.navbar .nav-content .nav-links a:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #b19cd9;
+  transition: width 0.3s;
+}
+.navbar .nav-content .nav-links a:hover {
+  color: #b19cd9;
+}
+.navbar .nav-content .nav-links a:hover:after {
+  width: 100%;
+}
+.navbar .nav-content .nav-links a.active {
+  color: #b19cd9;
+}
+.navbar .nav-content .nav-links a.active:after {
+  width: 100%;
+}
+@media (max-width: 480px) {
+  .navbar .nav-content .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 80%;
+    flex-direction: column;
+    padding: 5rem 1.5rem;
+    background-color: #141414;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    gap: 1rem;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  .navbar .nav-content .nav-links.open {
+    transform: translateX(0);
+  }
+  .navbar .nav-content .nav-links a {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+  .navbar .nav-content .nav-links a:after {
+    display: none;
+  }
+  .navbar .nav-content .nav-links a:hover {
+    background-color: rgba(177, 156, 217, 0.1);
+  }
+  .navbar .nav-content .nav-links a.active {
+    background-color: rgba(177, 156, 217, 0.2);
+  }
+  .navbar .nav-content .nav-links .mobile-cart {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(177, 156, 217, 0.2);
+    width: 100%;
+  }
+  .navbar .nav-content .nav-links .mobile-cart :global(.cart) {
+    box-shadow: none;
+    background: none;
+    padding: 0;
+  }
+  .navbar .nav-content .nav-links .mobile-cart :global(.cart) .cart-items {
+    max-height: calc(100vh - 400px);
+    overflow-y: auto;
+  }
+  .navbar .nav-content .nav-links .mobile-cart :global(.cart) .cart-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(177, 156, 217, 0.2);
+  }
+}
+.navbar .overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.navbar .overlay.open {
+  display: block;
+}
+@media (max-width: 425px) {
+  .navbar .overlay.open {
+    display: block;
+  }
+}/*# sourceMappingURL=Navbar.css.map */

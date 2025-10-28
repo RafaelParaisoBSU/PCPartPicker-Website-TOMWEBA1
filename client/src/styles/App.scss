@@ -1,0 +1,37 @@
+@use '../styles/variables';
+
+// Global styles
+body {
+    background-color: variables.$bg-dark;
+    color: variables.$text-primary;
+    @include variables.custom-scrollbar;
+}
+
+// Main container
+.app-container {
+    min-height: 100vh;
+
+    .main-content {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 2rem;
+
+        .main-heading {
+            color: variables.$text-primary;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            font-weight: bolder;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+
+            @media (max-width: 480px) {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}

@@ -1,0 +1,261 @@
+.cart {
+  background-color: #141414;
+  padding: 1.5rem;
+  border-radius: 8px;
+  position: sticky;
+  top: 2rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #b19cd9 #0a0a0a;
+}
+.cart::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.cart::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  border-radius: 4px;
+}
+.cart::-webkit-scrollbar-thumb {
+  background: #b19cd9;
+  border-radius: 4px;
+}
+.cart::-webkit-scrollbar-thumb:hover {
+  background: rgb(206.0364963504, 192.8540145985, 231.1459854015);
+}
+@media (max-width: 480px) {
+  .cart:not(.mobile-cart .cart) {
+    display: none;
+  }
+}
+.mobile-cart .cart {
+  max-height: none;
+  position: static;
+  box-shadow: none;
+  padding: 1rem 0;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(177, 156, 217, 0.2);
+}
+.mobile-cart .cart .cart-items {
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+.mobile-cart .cart .cart-total {
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+.cart h2 {
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+.cart .cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.cart .cart-items .cart-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  background-color: #0a0a0a;
+  border-radius: 8px;
+  border: 1px solid rgba(177, 156, 217, 0.1);
+  transition: all 0.3s;
+}
+@media (max-width: 768px) {
+  .cart .cart-items .cart-item {
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "image details" "remove remove";
+    gap: 1rem;
+  }
+}
+.cart .cart-items .cart-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(177, 156, 217, 0.3);
+  box-shadow: -4px 4px 12px rgba(177, 156, 217, 0.1);
+}
+.cart .cart-items .cart-item .cart-item-image {
+  width: 50px;
+  height: 50px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+@media (max-width: 768px) {
+  .cart .cart-items .cart-item .cart-item-image {
+    grid-area: image;
+  }
+}
+.cart .cart-items .cart-item .cart-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+@media (max-width: 768px) {
+  .cart .cart-items .cart-item .cart-item-details {
+    grid-area: details;
+  }
+}
+.cart .cart-items .cart-item .cart-item-details .item-name {
+  color: #ffffff;
+}
+.cart .cart-items .cart-item .cart-item-details .item-price {
+  color: #b19cd9;
+  font-weight: bold;
+}
+.cart .cart-items .cart-item .remove-btn {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #d896b0;
+  border: 1px solid #d896b0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+@media (max-width: 768px) {
+  .cart .cart-items .cart-item .remove-btn {
+    grid-area: remove;
+    width: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(216, 150, 176, 0.1), rgba(216, 150, 176, 0.2));
+    font-weight: 500;
+  }
+}
+.cart .cart-items .cart-item .remove-btn:hover {
+  background-color: #d896b0;
+  color: white;
+  box-shadow: 0 2px 8px rgba(216, 150, 176, 0.3);
+}
+.cart .cart-total {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #2d2d2d;
+}
+.cart .cart-total strong {
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+.cart .cart-total .checkout-btn {
+  padding: 0.75rem;
+  background: #d896b0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.cart .cart-total .checkout-btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+.cart .cart-total .checkout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(177, 156, 217, 0.4);
+}
+.cart .cart-total .checkout-btn:hover:before {
+  left: 100%;
+}
+.cart .cart-total .checkout-btn:active {
+  transform: translateY(0);
+}
+.cart .checkout-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cart .checkout-form h3 {
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+.cart .checkout-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.cart .checkout-form .form-group input, .cart .checkout-form .form-group textarea {
+  padding: 0.75rem;
+  background-color: #0a0a0a;
+  border: 1px solid #2d2d2d;
+  border-radius: 4px;
+  color: #ffffff;
+}
+.cart .checkout-form .form-group input:focus, .cart .checkout-form .form-group textarea:focus {
+  outline: none;
+  border-color: #b19cd9;
+}
+.cart .checkout-form .form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+.cart .checkout-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.cart .checkout-form .form-row input {
+  padding: 0.75rem;
+  background-color: #0a0a0a;
+  border: 1px solid #2d2d2d;
+  border-radius: 4px;
+  color: #ffffff;
+}
+.cart .checkout-form .form-row input:focus {
+  outline: none;
+  border-color: #b19cd9;
+}
+.cart .checkout-form .place-order-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #b19cd9, rgb(133.4452554745, 100.7189781022, 195.7810218978));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 1rem;
+}
+.cart .checkout-form .place-order-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(177, 156, 217, 0.4);
+}
+.cart .checkout-form .place-order-btn:active {
+  transform: translateY(1px);
+}
+.cart .checkout-form .cancel-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgb(202.1875, 112.8125, 148.0208333333), #d896b0);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.cart .checkout-form .cancel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(216, 150, 176, 0.4);
+}
+.cart .checkout-form .cancel-btn:active {
+  transform: translateY(1px);
+}/*# sourceMappingURL=Cart.css.map */

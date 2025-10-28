@@ -1,0 +1,227 @@
+@use "sass:color";
+@use '../styles/variables';
+
+.contact-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    color: variables.$text-primary;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, variables.$text-primary 0%, variables.$accent-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .contact-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding: 0 1rem;
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+
+      .info-card {
+        background: variables.$bg-card;
+        padding: 2rem;
+        border-radius: 20px;
+        text-align: center;
+        border: 1px solid rgba(variables.$accent-color, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, variables.$accent-color, transparent);
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+
+        &:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+          &:before {
+            opacity: 1;
+          }
+        }
+
+        h3 {
+          color: variables.$accent-color;
+          font-size: 1.4rem;
+          margin-bottom: 1rem;
+          position: relative;
+          display: inline-block;
+
+          &:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, variables.$accent-color, transparent);
+          }
+        }
+
+        p {
+          color: variables.$text-secondary;
+          line-height: 1.6;
+          font-size: 1.1rem;
+          
+          &:hover {
+            color: variables.$text-primary;
+          }
+        }
+      }
+    }
+
+    .contact-form-container {
+      max-width: 1024px;
+      margin: 0 auto;
+      width: 100%;
+      background: linear-gradient(145deg, variables.$bg-card, color.adjust(variables.$bg-card, $lightness: -5%));
+      padding: 3rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(variables.$accent-color, 0.1);
+
+      h2 {
+        color: variables.$accent-color;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 60px;
+          height: 3px;
+          background: variables.$accent-color;
+          border-radius: 3px;
+        }
+      }
+
+      .form-group {
+        margin-bottom: 2rem;
+        position: relative;
+
+        label {
+          display: block;
+          color: variables.$accent-color;
+          margin-bottom: 0.8rem;
+          font-size: 1rem;
+          font-weight: 500;
+          transition: color 0.3s;
+        }
+
+        input,
+        textarea {
+          width: 100%;
+          padding: 1rem 1.2rem;
+          background: rgba(variables.$bg-dark, 0.4);
+          border: 2px solid rgba(variables.$accent-color, 0.1);
+          border-radius: 12px;
+          color: variables.$text-primary;
+          font-size: 1rem;
+          transition: all 0.3s;
+          backdrop-filter: blur(10px);
+
+          &:focus {
+            outline: none;
+            border-color: variables.$accent-color;
+            box-shadow: 0 0 0 4px rgba(variables.$accent-color, 0.1);
+            background: rgba(variables.$bg-dark, 0.6);
+          }
+
+          &::placeholder {
+            color: rgba(variables.$text-secondary, 0.5);
+          }
+
+          &:hover {
+            border-color: rgba(variables.$accent-color, 0.5);
+          }
+        }
+
+        textarea {
+          min-height: 150px;
+          resize: vertical;
+        }
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        background: linear-gradient(135deg, variables.$accent-color, color.adjust(variables.$accent-color, $lightness: -15%));
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+          );
+          transition: left 0.6s;
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 20px rgba(variables.$accent-color, 0.3);
+
+          &:before {
+            left: 100%;
+          }
+        }
+
+        &:active {
+          transform: translateY(1px);
+          box-shadow: 0 5px 10px rgba(variables.$accent-color, 0.2);
+        }
+      }
+    }
+  }
+}

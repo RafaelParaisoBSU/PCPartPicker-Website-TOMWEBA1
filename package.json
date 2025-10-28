@@ -1,0 +1,12 @@
+{
+  "name": "pcpartpicker-website",
+  "version": "1.0.0",
+  "description": "PCPartPicker",
+  "scripts": {
+    "start": "concurrently \"cd backend && npm start\" \"cd client && npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "vite": "^7.1.12"
+  }
+}

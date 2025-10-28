@@ -1,0 +1,47 @@
+body {
+  background-color: #0a0a0a;
+  color: #ffffff;
+  scrollbar-width: thin;
+  scrollbar-color: #b19cd9 #0a0a0a;
+}
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+body::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  border-radius: 4px;
+}
+body::-webkit-scrollbar-thumb {
+  background: #b19cd9;
+  border-radius: 4px;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: rgb(206.0364963504, 192.8540145985, 231.1459854015);
+}
+
+.app-container {
+  min-height: 100vh;
+}
+.app-container .main-content {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+.app-container .main-content .main-heading {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2rem;
+  font-weight: bolder;
+}
+.app-container .main-content .content-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+@media (max-width: 480px) {
+  .app-container .main-content .content-layout {
+    grid-template-columns: 1fr;
+  }
+}/*# sourceMappingURL=App.css.map */

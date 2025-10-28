@@ -1,0 +1,201 @@
+.contact-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contact-container h1 {
+  color: #ffffff;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, #b19cd9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.contact-container .contact-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+.contact-container .contact-form .contact-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 0 1rem;
+}
+@media (max-width: 768px) {
+  .contact-container .contact-form .contact-info {
+    grid-template-columns: 1fr;
+  }
+}
+.contact-container .contact-form .contact-info .info-card {
+  background: #141414;
+  padding: 2rem;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid rgba(177, 156, 217, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.contact-container .contact-form .contact-info .info-card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #b19cd9, transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.contact-container .contact-form .contact-info .info-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+.contact-container .contact-form .contact-info .info-card:hover:before {
+  opacity: 1;
+}
+.contact-container .contact-form .contact-info .info-card h3 {
+  color: #b19cd9;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+.contact-container .contact-form .contact-info .info-card h3:after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #b19cd9, transparent);
+}
+.contact-container .contact-form .contact-info .info-card p {
+  color: #e6e6fa;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+.contact-container .contact-form .contact-info .info-card p:hover {
+  color: #ffffff;
+}
+.contact-container .contact-form .contact-form-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  width: 100%;
+  background: linear-gradient(145deg, #141414, rgb(7.25, 7.25, 7.25));
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(177, 156, 217, 0.1);
+}
+.contact-container .contact-form .contact-form-container h2 {
+  color: #b19cd9;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.contact-container .contact-form .contact-form-container h2:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: #b19cd9;
+  border-radius: 3px;
+}
+.contact-container .contact-form .contact-form-container .form-group {
+  margin-bottom: 2rem;
+  position: relative;
+}
+.contact-container .contact-form .contact-form-container .form-group label {
+  display: block;
+  color: #b19cd9;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.contact-container .contact-form .contact-form-container .form-group input,
+.contact-container .contact-form .contact-form-container .form-group textarea {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  background: rgba(10, 10, 10, 0.4);
+  border: 2px solid rgba(177, 156, 217, 0.1);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: all 0.3s;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.contact-container .contact-form .contact-form-container .form-group input:focus,
+.contact-container .contact-form .contact-form-container .form-group textarea:focus {
+  outline: none;
+  border-color: #b19cd9;
+  box-shadow: 0 0 0 4px rgba(177, 156, 217, 0.1);
+  background: rgba(10, 10, 10, 0.6);
+}
+.contact-container .contact-form .contact-form-container .form-group input::-moz-placeholder, .contact-container .contact-form .contact-form-container .form-group textarea::-moz-placeholder {
+  color: rgba(230, 230, 250, 0.5);
+}
+.contact-container .contact-form .contact-form-container .form-group input::placeholder,
+.contact-container .contact-form .contact-form-container .form-group textarea::placeholder {
+  color: rgba(230, 230, 250, 0.5);
+}
+.contact-container .contact-form .contact-form-container .form-group input:hover,
+.contact-container .contact-form .contact-form-container .form-group textarea:hover {
+  border-color: rgba(177, 156, 217, 0.5);
+}
+.contact-container .contact-form .contact-form-container .form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+.contact-container .contact-form .contact-form-container .submit-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #b19cd9, rgb(133.4452554745, 100.7189781022, 195.7810218978));
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+.contact-container .contact-form .contact-form-container .submit-btn:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+.contact-container .contact-form .contact-form-container .submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(177, 156, 217, 0.3);
+}
+.contact-container .contact-form .contact-form-container .submit-btn:hover:before {
+  left: 100%;
+}
+.contact-container .contact-form .contact-form-container .submit-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 5px 10px rgba(177, 156, 217, 0.2);
+}/*# sourceMappingURL=Contact.css.map */
