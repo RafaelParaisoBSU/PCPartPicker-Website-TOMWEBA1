@@ -6,12 +6,10 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://rafaelparaisobsu:OmgItsMystic1@cluster0.bon9u.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://rafaelparaisobsu:OmgItsMystic1@cluster0.bon9u.mongodb.net/pcpartpicker?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(MONGO_URI)
   .then(() => {
@@ -22,16 +20,16 @@ mongoose.connect(MONGO_URI)
     process.exit(1);
   });
 
-// Routes
 const ordersRouter = require('./routes/orders');
-app.use('/api/orders', ordersRouter);
+const contactsRouter = require('./routes/contacts');
 
-// Basic route
+app.use('/api/orders', ordersRouter);
+app.use('/api/contacts', contactsRouter);
+
 app.get('/', (req, res) => {
   res.json({ message: 'Server is running!' });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
   console.log(`📱 Backend API: http://localhost:${PORT}`);

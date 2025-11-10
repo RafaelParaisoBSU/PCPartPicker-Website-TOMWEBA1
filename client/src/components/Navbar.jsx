@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/Navbar.scss';
 
@@ -6,6 +6,7 @@ const Navbar = ({ cartComponent }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const navRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -15,9 +16,21 @@ const Navbar = ({ cartComponent }) => {
       }
     };
 
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && navRef.current && !navRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+        document.body.classList.remove('menu-open');
+      }
+    };
+
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const isActive = (path) => {
     return location.pathname === path ? 'active' : '';
@@ -29,7 +42,7 @@ const Navbar = ({ cartComponent }) => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" ref={navRef}>
       <div className="nav-content">
         <Link to="/" className="logo">
           PCPartPicker
@@ -46,6 +59,16 @@ const Navbar = ({ cartComponent }) => {
         </button>
 
         <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+          <button 
+            className="close-menu"
+            onClick={() => {
+              setIsMenuOpen(false);
+              document.body.classList.remove('menu-open');
+            }}
+            aria-label="Close menu"
+          >
+            ×
+          </button>
           <Link to="/" className={isActive('/')} onClick={() => setIsMenuOpen(false)}>
             Home
           </Link>

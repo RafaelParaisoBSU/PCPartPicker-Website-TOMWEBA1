@@ -2,224 +2,302 @@
 @use '../styles/variables';
 
 .contact-container {
-  max-width: 1024px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem 2rem;
   min-height: calc(100vh - 100px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
-  h1 {
-    color: variables.$text-primary;
-    font-size: 3rem;
-    margin-bottom: 1rem;
+  .contact-hero {
     text-align: center;
-    background: linear-gradient(135deg, variables.$text-primary 0%, variables.$accent-color 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    margin-bottom: 4rem;
+
+    h1 {
+      color: variables.$text-primary;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, variables.$text-primary 30%, variables.$accent-color 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .lead {
+      color: variables.$text-secondary;
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
   }
 
-  .contact-form {
-    width: 100%;
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(300px, 1fr) minmax(400px, 2fr);
+    gap: 3rem;
+    align-items: start;
+
+    @media (max-width: 968px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 1.5rem;
 
-    .contact-info {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      padding: 0 1rem;
+    .info-card {
+      background: variables.$bg-card;
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(variables.$accent-color, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
 
-      @media (max-width: 768px) {
-        grid-template-columns: 1fr;
-      }
-
-      .info-card {
-        background: variables.$bg-card;
-        padding: 2rem;
-        border-radius: 20px;
-        text-align: center;
-        border: 1px solid rgba(variables.$accent-color, 0.1);
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-
-        &:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, variables.$accent-color, transparent);
-          opacity: 0;
-          transition: opacity 0.3s;
-        }
-
-        &:hover {
-          transform: translateY(-10px);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-
-          &:before {
-            opacity: 1;
-          }
-        }
+      &.main {
+        background: linear-gradient(145deg, 
+          variables.$bg-card,
+          color.adjust(variables.$bg-card, $lightness: 3%)
+        );
 
         h3 {
           color: variables.$accent-color;
-          font-size: 1.4rem;
+          font-size: 1.5rem;
           margin-bottom: 1rem;
-          position: relative;
-          display: inline-block;
+        }
 
-          &:after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, variables.$accent-color, transparent);
+        .muted {
+          color: variables.$text-secondary;
+          opacity: 0.8;
+          margin-bottom: 1.5rem;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          
+          li {
+            margin-bottom: 1rem;
+            color: variables.$text-secondary;
+            
+            strong {
+              color: variables.$text-primary;
+              display: inline-block;
+              width: 5rem;
+            }
+
+            a {
+              color: variables.$accent-color;
+              text-decoration: none;
+              transition: color 0.2s;
+
+              &:hover {
+                color: color.adjust(variables.$accent-color, $lightness: 10%);
+                text-decoration: underline;
+              }
+            }
           }
+        }
+      }
+
+      &.small {
+        padding: 1.5rem;
+
+        h4 {
+          color: variables.$text-primary;
+          font-size: 1.1rem;
+          margin-bottom: 1rem;
         }
 
         p {
           color: variables.$text-secondary;
-          line-height: 1.6;
-          font-size: 1.1rem;
-          
-          &:hover {
-            color: variables.$text-primary;
+          margin-bottom: 0.5rem;
+          font-size: 0.95rem;
+
+          &:last-child {
+            margin-bottom: 0;
           }
-        }
-      }
-    }
-
-    .contact-form-container {
-      max-width: 1024px;
-      margin: 0 auto;
-      width: 100%;
-      background: linear-gradient(145deg, variables.$bg-card, color.adjust(variables.$bg-card, $lightness: -5%));
-      padding: 3rem;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(variables.$accent-color, 0.1);
-
-      h2 {
-        color: variables.$accent-color;
-        font-size: 2rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        position: relative;
-        display: inline-block;
-        width: 100%;
-
-        &:after {
-          content: '';
-          position: absolute;
-          bottom: -10px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 60px;
-          height: 3px;
-          background: variables.$accent-color;
-          border-radius: 3px;
-        }
-      }
-
-      .form-group {
-        margin-bottom: 2rem;
-        position: relative;
-
-        label {
-          display: block;
-          color: variables.$accent-color;
-          margin-bottom: 0.8rem;
-          font-size: 1rem;
-          font-weight: 500;
-          transition: color 0.3s;
-        }
-
-        input,
-        textarea {
-          width: 100%;
-          padding: 1rem 1.2rem;
-          background: rgba(variables.$bg-dark, 0.4);
-          border: 2px solid rgba(variables.$accent-color, 0.1);
-          border-radius: 12px;
-          color: variables.$text-primary;
-          font-size: 1rem;
-          transition: all 0.3s;
-          backdrop-filter: blur(10px);
-
-          &:focus {
-            outline: none;
-            border-color: variables.$accent-color;
-            box-shadow: 0 0 0 4px rgba(variables.$accent-color, 0.1);
-            background: rgba(variables.$bg-dark, 0.6);
-          }
-
-          &::placeholder {
-            color: rgba(variables.$text-secondary, 0.5);
-          }
-
-          &:hover {
-            border-color: rgba(variables.$accent-color, 0.5);
-          }
-        }
-
-        textarea {
-          min-height: 150px;
-          resize: vertical;
-        }
-      }
-
-      .submit-btn {
-        width: 100%;
-        padding: 1rem;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: white;
-        background: linear-gradient(135deg, variables.$accent-color, color.adjust(variables.$accent-color, $lightness: -15%));
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-        letter-spacing: 0.5px;
-
-        &:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.2),
-            transparent
-          );
-          transition: left 0.6s;
         }
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 10px 20px rgba(variables.$accent-color, 0.3);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
 
-          &:before {
-            left: 100%;
+        .socials {
+          display: flex;
+          gap: 1rem;
+          margin: 0;
+
+          a {
+            color: variables.$text-secondary;
+            text-decoration: none;
+            transition: color 0.2s;
+
+            &:hover {
+              color: variables.$accent-color;
+            }
           }
+        }
+      }
+    }
+  }
+
+  .contact-form-card {
+    background: variables.$bg-card;
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid rgba(variables.$accent-color, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        color: variables.$text-primary;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background: rgba(variables.$bg-dark, 0.4);
+        border: 2px solid rgba(variables.$accent-color, 0.1);
+        border-radius: 8px;
+        color: variables.$text-primary;
+        font-size: 1rem;
+        transition: all 0.2s;
+
+        &[aria-invalid="true"] {
+          border-color: variables.$error-color;
+          background: rgba(variables.$error-color, 0.05);
+        }
+
+        &:focus {
+          outline: none;
+          border-color: variables.$accent-color;
+          background: rgba(variables.$bg-dark, 0.6);
+          box-shadow: 0 0 0 3px rgba(variables.$accent-color, 0.1);
+        }
+
+        &:hover:not(:focus):not([aria-invalid="true"]) {
+          border-color: rgba(variables.$accent-color, 0.3);
+        }
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .error {
+        color: variables.$error-color;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+
+      button {
+        flex: 1;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &.primary {
+          background: linear-gradient(135deg, 
+            variables.$accent-color,
+            color.adjust(variables.$accent-color, $lightness: -15%)
+          );
+          color: white;
+
+          &:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(variables.$accent-color, 0.3);
+          }
+
+          &:active:not(:disabled) {
+            transform: translateY(1px);
+          }
+        }
+
+        &.secondary {
+          background: rgba(variables.$accent-color, 0.1);
+          color: variables.$text-primary;
+
+          &:hover:not(:disabled) {
+            background: rgba(variables.$accent-color, 0.15);
+          }
+        }
+
+        &:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .success-card {
+      text-align: center;
+      padding: 2rem 1rem;
+
+      h3 {
+        color: variables.$accent-color;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: variables.$text-secondary;
+        margin-bottom: 2rem;
+
+        strong {
+          color: variables.$text-primary;
+        }
+      }
+
+      button {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, 
+          variables.$accent-color,
+          color.adjust(variables.$accent-color, $lightness: -15%)
+        );
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(variables.$accent-color, 0.3);
         }
 
         &:active {
           transform: translateY(1px);
-          box-shadow: 0 5px 10px rgba(variables.$accent-color, 0.2);
         }
       }
     }

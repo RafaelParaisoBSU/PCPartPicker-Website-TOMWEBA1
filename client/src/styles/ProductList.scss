@@ -1,33 +1,35 @@
 @use '../styles/variables';
 
 .products {
-    max-height: calc(100vh - 50px);
-    overflow-y: auto;
-    padding-right: 16px;
-    @include variables.custom-scrollbar;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 100px);
+    height: 100%;
+    padding: 2rem;
+    background-color: variables.$bg-dark;
+    overflow: hidden;
 
     @media (max-width: 481px) {
+        height: auto;
+        min-height: 0;
+        padding: 1rem;
         margin: 0 auto;
-        max-height: none;
-        overflow-y: visible;
-        padding-right: 0;
         width: 100%;
         max-width: 100%;
-        padding: 0 1rem;
+        overflow: visible;
     }
 
     h2 {
         color: variables.$text-primary;
-        margin-bottom: 1.5rem;
-        position: sticky;
         font-size: 1.5rem;
         text-align: center;
         font-weight: bolder;
         background-color: variables.$bg-card;
         border-radius: 8px;
-        top: 0;
-        padding: 1rem 0;
-        z-index: 1;
+        padding: 1rem;
+        margin: 0 0 1rem 0;
+        flex-shrink: 0;
 
         @media (max-width: 481px) {
             font-size: 1.25rem;
@@ -38,16 +40,31 @@
     }
 
     .products-grid {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 16px;
+        margin-bottom: 1rem;
+        @include variables.custom-scrollbar;
+
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 2rem;
-        
+        align-content: start;
+        padding-bottom: 2rem;
+
+        @media (max-width: 481px) {
+            overflow: visible;
+            padding-right: 0;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
         @media (max-width: 481px) {
             grid-template-columns: minmax(auto, 600px);
             justify-content: center;
             gap: 1.5rem;
         }
-    
+
         .product-card {
             background-color: variables.$bg-card;
             border-radius: 12px;

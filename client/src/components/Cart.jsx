@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import '../styles/Cart.scss';
+import Modal from './Modal';
 
-const Cart = ({ items, onRemoveFromCart, onOrderPlaced }) => {
+const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart }) => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     address: ''
   });
+  const [showConfirmClear, setShowConfirmClear] = useState(false);
 
-  const total = items.reduce((sum, item) => sum + item.price, 0);
+  const total = items.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,13 +51,54 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced }) => {
         throw new Error(err.error || 'Failed to place order');
       }
 
-      alert('Order placed successfully!');
+      const orderSummaryHTML = `
+        <div class="order-summary">
+          <p class="thank-you">Thank you for your order, ${formData.name}!</p>
+          <p class="confirmation">We'll send a confirmation email to ${formData.email}</p>
+          
+          <div class="summary-section">
+            <h4>Order Summary</h4>
+            <div class="items-list">
+              ${items.map(item => `
+                <div class="summary-item">
+                  <span class="item-name">${item.name}</span>
+                  <div class="item-details">
+                    <span class="quantity">${item.quantity || 1}x</span>
+                    <span class="price">$${(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="summary-total">
+              <span>Total</span>
+              <span>$${total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div class="shipping-info">
+            <h4>Shipping Address</h4>
+            <p>${formData.address}</p>
+          </div>
+        </div>
+      `;
+
+      onShowModal({
+        isOpen: true,
+        type: 'success',
+        title: 'Order Placed Successfully!',
+        message: orderSummaryHTML
+      });
       setFormData({ name: '', email: '', address: ''});
       setIsCheckingOut(false);
       if (typeof onOrderPlaced === 'function') onOrderPlaced();
     } catch (error) {
       console.error('Checkout error:', error);
-      alert(error.message || 'Error processing payment');
+      onShowModal({
+        isOpen: true,
+        type: 'error',
+        title: 'Order Failed',
+        message: error.message || 'There was an error processing your order. Please try again or contact support if the problem persists.'
+      });
     }
   };
 
@@ -68,25 +111,62 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced }) => {
         <>
           <div className="cart-items">
             {items.map((item, index) => (
-              <div key={index} className="cart-item">
+                <div key={index} className="cart-item">
                 {item.image && <img src={item.image} alt={item.name} className="cart-item-image" />}
                 <div className="cart-item-details">
                   <span className="item-name">{item.name}</span>
-                  <span className="item-price">${item.price}</span>
+                  <div className="item-price-quantity">
+                    <span className="item-price">${(item.price * (item.quantity || 1)).toFixed(2)}</span>
+                    {item.quantity > 1 && (
+                      <span className="item-quantity">({item.quantity}x)</span>
+                    )}
+                  </div>
                 </div>
-                <button className="remove-btn" onClick={() => onRemoveFromCart(index)}>Remove</button>
+                <button className="remove-btn" onClick={() => onRemoveFromCart(index)}>
+                  {item.quantity > 1 ? 'Remove One' : 'Remove'}
+                </button>
               </div>
             ))}
           </div>
           <div className="cart-total">
             <strong>Total: ${total.toFixed(2)}</strong>
             {!isCheckingOut && (
-              <button 
-                className="checkout-btn"
-                onClick={() => setIsCheckingOut(true)}
-              >
-                Proceed to Checkout
-              </button>
+              <div className="cart-buttons">
+                <button 
+                  className="checkout-btn"
+                  onClick={() => setIsCheckingOut(true)}
+                >
+                  Proceed to Checkout
+                </button>
+                <button 
+                  className="clear-cart-btn"
+                  onClick={() => {
+                    onShowModal({
+                      isOpen: true,
+                      type: 'warning',
+                      title: 'Clear Cart',
+                      message: 'Are you sure you want to remove all items from your cart?',
+                      actions: [
+                        {
+                          label: 'No, Keep Items',
+                          onClick: () => onShowModal({ isOpen: false }),
+                          primary: true
+                        },
+                        {
+                          label: 'Yes, Clear Cart',
+                          onClick: () => {
+                            onClearCart();
+                            onShowModal({ isOpen: false });
+                          },
+                          primary: false
+                        }
+                      ]
+                    });
+                  }}
+                >
+                  Remove All
+                </button>
+              </div>
             )}
           </div>
 

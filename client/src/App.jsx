@@ -6,11 +6,13 @@ import Cart from "./components/Cart";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Modal from "./components/Modal";
 import "./styles/App.scss";
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [modal, setModal] = useState({ isOpen: false, type: '', title: '', message: '', actions: [] });
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,14 +24,42 @@ const App = () => {
   }, []);
 
   const handleAddToCart = (product) => {
-    setCartItems([...cartItems, product]);
+    const existingItemIndex = cartItems.findIndex(item => item.id === product.id);
+    if (existingItemIndex > -1) {
+      const updatedItems = [...cartItems];
+      updatedItems[existingItemIndex] = {
+        ...updatedItems[existingItemIndex],
+        quantity: (updatedItems[existingItemIndex].quantity || 1) + 1
+      };
+      setCartItems(updatedItems);
+    } else {
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    }
   };
 
   const handleRemoveFromCart = (index) => {
-    setCartItems(cartItems.filter((_, i) => i !== index));
+    const item = cartItems[index];
+    if (item.quantity > 1) {
+      const updatedItems = [...cartItems];
+      updatedItems[index] = { ...item, quantity: item.quantity - 1 };
+      setCartItems(updatedItems);
+    } else {
+      setCartItems(cartItems.filter((_, i) => i !== index));
+    }
   };
 
-  const cartComponent = <Cart items={cartItems} onRemoveFromCart={handleRemoveFromCart} />;
+  const handleClearCart = () => {
+    setCartItems([]);
+  };
+
+  const cartComponent = (
+    <Cart 
+      items={cartItems} 
+      onRemoveFromCart={handleRemoveFromCart}
+      onClearCart={handleClearCart}
+      onShowModal={setModal}
+    />
+  );
 
   return (
     <Router>
@@ -49,6 +79,15 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />
+        <Modal
+          isOpen={modal.isOpen}
+          onClose={() => setModal({ ...modal, isOpen: false })}
+          type={modal.type}
+          title={modal.title}
+          actions={modal.actions}
+        >
+          {modal.message}
+        </Modal>
       </div>
     </Router>
   );
