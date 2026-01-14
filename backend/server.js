@@ -22,9 +22,13 @@ mongoose.connect(MONGO_URI)
 
 const ordersRouter = require('./routes/orders');
 const contactsRouter = require('./routes/contacts');
+const authRouter = require('./routes/auth');
+const buildsRouter = require('./routes/builds');
 
 app.use('/api/orders', ordersRouter);
 app.use('/api/contacts', contactsRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/builds', buildsRouter);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Server is running!' });

@@ -68,6 +68,7 @@
     .nav-links {
       display: flex;
       gap: 2rem;
+      align-items: center;
 
       .close-menu {
         display: none;
@@ -155,6 +156,34 @@
           color: variables.$accent-color;
           &:after {
             width: 100%;
+          }
+        }
+      }
+
+      .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        
+        .user-greeting {
+          color: variables.$accent-color;
+          font-weight: 600;
+          font-size: 1rem;
+        }
+
+        .logout-btn {
+          background: none;
+          border: 2px solid variables.$accent-color;
+          color: variables.$accent-color;
+          padding: 0.5rem 1rem;
+          border-radius: 6px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: all 0.3s;
+
+          &:hover {
+            background-color: variables.$accent-color;
+            color: white;
           }
         }
       }

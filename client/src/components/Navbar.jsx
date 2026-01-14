@@ -2,11 +2,26 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../styles/Navbar.scss';
 
-const Navbar = ({ cartComponent }) => {
+const Navbar = ({ cartComponent, user: userProp, setUser: setUserProp, onClearCart }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [user, setUser] = useState(userProp || null);
   const navRef = useRef(null);
+
+  // Update user when location changes or when userProp changes
+  useEffect(() => {
+    if (userProp) {
+      setUser(userProp);
+    } else {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      } else {
+        setUser(null);
+      }
+    }
+  }, [location, userProp]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,6 +56,22 @@ const Navbar = ({ cartComponent }) => {
     document.body.classList.toggle('menu-open');
   };
 
+  const handleLogout = () => {
+    // Sign out from Google if logged in via Google
+    if (window.google) {
+      window.google.accounts.id.disableAutoSelect();
+    }
+    
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    setUser(null);
+    setUserProp(null);
+    if (onClearCart) {
+      onClearCart();
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="navbar" ref={navRef}>
       <div className="nav-content">
@@ -72,12 +103,32 @@ const Navbar = ({ cartComponent }) => {
           <Link to="/" className={isActive('/')} onClick={() => setIsMenuOpen(false)}>
             Home
           </Link>
+          <Link to="/your-build" className={isActive('/your-build')} onClick={() => setIsMenuOpen(false)}>
+            Your Build
+          </Link>
           <Link to="/about" className={isActive('/about')} onClick={() => setIsMenuOpen(false)}>
             About
           </Link>
           <Link to="/contact" className={isActive('/contact')} onClick={() => setIsMenuOpen(false)}>
             Contact
           </Link>
+          {user && user.isAdmin && (
+            <Link to="/admin" className={isActive('/admin')} onClick={() => setIsMenuOpen(false)}>
+              Admin Panel
+            </Link>
+          )}
+          {user ? (
+            <div className="user-menu">
+              <span className="user-greeting">{user.firstName}</span>
+              <button className="logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/auth" className={isActive('/auth')} onClick={() => setIsMenuOpen(false)}>
+              Sign In / Sign Up
+            </Link>
+          )}
           {isMobile && cartComponent && (
             <div className="mobile-cart">
               {cartComponent}

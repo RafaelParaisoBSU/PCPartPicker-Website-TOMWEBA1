@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import ryzen from '../assets/products/ryzen.png';
 import rtx from '../assets/products/rtx.png';
 import ram from '../assets/products/ram.png';
@@ -10,13 +11,13 @@ import ram1 from '../assets/products/ram1.png';
 import ssd1 from '../assets/products/ssd1.png';
 import case_img1 from '../assets/products/case1.png';
 import motherboard1 from '../assets/products/motherboard1.png';
-import '../styles/ProductList.scss';
-import { useState } from 'react';
+import '../styles/YourBuild.scss';
 
-const ProductList = ({ onAddToCart }) => {
-  const [selectedCategory, setSelectedCategory] = useState('CPU');
+const YourBuild = ({ onAddToCart, user, onShowModal }) => {
+  const categories = ['CPU', 'Cooler', 'Motherboard', 'RAM', 'Storage', 'GPU', 'PSU', 'Case', 'Monitor'];
+  const categoryKeys = ['cpu', 'cooler', 'motherboard', 'ram', 'storage', 'gpu', 'psu', 'case', 'monitor'];
 
-  const products = [
+  const allProducts = [
     // CPUs
     { id: 1, name: 'AMD Ryzen 7 5800X', category: 'CPU', price: 184.99, image: ryzen, description: '8-core / 16-thread AM4 processor, great for gaming and productivity.' },
     { id: 7, name: 'AMD Ryzen 9 9950X3D', category: 'CPU', price: 699.99, image: ryzen1, description: '16-core / 32-thread AM5 CPU for top-tier gaming performance.' },
@@ -117,47 +118,283 @@ const ProductList = ({ onAddToCart }) => {
     { id: 167, name: 'ASUS PA328Q', category: 'Monitor', price: 649.99, image: rtx, description: '32" 4K professional monitor with 99% Adobe RGB for creators.' },
   ];
 
-  const categories = ['CPU', 'Cooler', 'Motherboard', 'RAM', 'Storage', 'GPU', 'PSU', 'Case', 'Monitor'];
+  const [build, setBuild] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('CPU');
+  const [loading, setLoading] = useState(true);
 
-  const filteredProducts = products.filter(p => p.category === selectedCategory);
+  // Load build from user account on mount or when user changes
+  useEffect(() => {
+    if (user && user.id) {
+      loadBuild();
+    } else {
+      // Clear build when user logs out
+      setBuild({});
+      setLoading(false);
+    }
+  }, [user?.id]);
+
+  const loadBuild = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch('http://localhost:5000/api/builds', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const buildData = await response.json();
+        setBuild(buildData);
+      } else if (response.status === 401) {
+        // Token invalid, clear it
+        localStorage.removeItem('authToken');
+        setBuild({});
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error loading build:', error);
+      setLoading(false);
+    }
+  };
+
+  const saveBuild = async (updatedBuild) => {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        console.warn('No auth token available for saving build');
+        return;
+      }
+
+      const response = await fetch('http://localhost:5000/api/builds', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ build: updatedBuild }),
+      });
+
+      if (!response.ok && response.status === 401) {
+        localStorage.removeItem('authToken');
+        console.error('Authorization failed - token may be invalid');
+      }
+    } catch (error) {
+      console.error('Error saving build:', error);
+    }
+  };
+
+  const selectItem = (product) => {
+    const categoryKey = product.category.toLowerCase();
+    const updatedBuild = {
+      ...build,
+      [categoryKey]: {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        description: product.description,
+      },
+    };
+    setBuild(updatedBuild);
+    saveBuild(updatedBuild);
+    setModalOpen(false);
+  };
+
+  const removeItem = (categoryKey) => {
+    const updatedBuild = { ...build };
+    delete updatedBuild[categoryKey];
+    setBuild(updatedBuild);
+    saveBuild(updatedBuild);
+  };
+
+  const addSelectedToCart = () => {
+    let hasEmpty = false;
+    categoryKeys.forEach(key => {
+      if (!build[key] || !build[key].id) hasEmpty = true;
+    });
+
+    if (hasEmpty) {
+      if (onShowModal) {
+        onShowModal({
+          isOpen: true,
+          type: 'error',
+          title: 'Incomplete Build',
+          message: 'Please select an item for each category before adding to cart',
+          actions: [{ label: 'OK', onClick: () => onShowModal({ isOpen: false }) }]
+        });
+      }
+      return;
+    }
+
+    // Collect all items to add
+    const itemsToAdd = [];
+    categoryKeys.forEach(key => {
+      if (build[key] && build[key].id) {
+        const product = build[key];
+        itemsToAdd.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          description: product.description,
+          category: key.charAt(0).toUpperCase() + key.slice(1),
+        });
+      }
+    });
+
+    // Add all items to cart
+    itemsToAdd.forEach(item => onAddToCart(item));
+
+    // Show success modal
+    if (onShowModal) {
+      const totalPrice = itemsToAdd.reduce((sum, item) => sum + item.price, 0);
+      onShowModal({
+        isOpen: true,
+        type: 'success',
+        title: 'Build Added to Cart',
+        message: `Your complete PC build (${itemsToAdd.length} items) has been added to cart. Total: $${totalPrice.toFixed(2)}`,
+        actions: [{ label: 'OK', onClick: () => onShowModal({ isOpen: false }) }]
+      });
+    }
+  };
+
+  if (loading) {
+    return <div className="your-build"><p>Loading...</p></div>;
+  }
+
+  if (!user) {
+    return (
+      <div className="your-build">
+        <h2>Your Build</h2>
+        <p style={{ textAlign: 'center', color: '#888' }}>Please log in to save your PC build</p>
+      </div>
+    );
+  }
+
+  const filteredProducts = allProducts.filter(p => p.category === selectedCategory);
 
   return (
-    <div className="products">
-      <h2>Available PC Parts</h2>
-      
-      <div className="category-filter">
-        {categories.map(cat => (
-          <button
-            key={cat}
-            className={`category-btn ${selectedCategory === cat ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
+    <div className="your-build">
+      <h2>Your PC Build</h2>
+      <p className="build-subtitle">Select one component from each category to build your PC</p>
+
+      <div className="build-grid">
+        {categories.map((category, idx) => {
+          const categoryKey = categoryKeys[idx];
+          const selectedItem = build[categoryKey];
+          const hasItem = selectedItem && selectedItem.id;
+
+          return (
+            <div key={category} className="build-box">
+              <div className="build-box-header">
+                <h3>{category}</h3>
+              </div>
+
+              {hasItem ? (
+                <div className="selected-item">
+                  <img src={selectedItem.image} alt={selectedItem.name} />
+                  <div className="item-details">
+                    <h4>{selectedItem.name}</h4>
+                    <p className="item-description">{selectedItem.description}</p>
+                    <p className="item-price">${selectedItem.price}</p>
+                    <button
+                      className="change-btn"
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setModalOpen(true);
+                      }}
+                    >
+                      Change
+                    </button>
+                    <button
+                      className="remove-btn"
+                      onClick={() => removeItem(categoryKey)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="empty-box">
+                  <p>No item selected</p>
+                  <button
+                    className="select-btn"
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setModalOpen(true);
+                    }}
+                  >
+                    + Select {category}
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      <div className="products-grid">
-        {filteredProducts.map((product) => (
-          <div key={product.id} className="product-card">
-            <img src={product.image} alt={product.name} className="product-image" />
-            <div className="product-info">
-              <h3>{product.name}</h3>
-              <p className="category">{product.category}</p>
-              <p className="description">{product.description}</p>
-              <p className="price">${product.price}</p>
-              <button 
-                className="add-to-cart-btn"
-                onClick={() => onAddToCart(product)}
-              >
-                Add to Cart
-              </button>
+      {modalOpen && (
+        <div className="modal-overlay" onClick={() => setModalOpen(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Select {selectedCategory}</h3>
+              <button className="close-btn" onClick={() => setModalOpen(false)}>✕</button>
+            </div>
+
+            <div className="modal-products">
+              {filteredProducts.map(product => (
+                <div key={product.id} className="modal-product">
+                  <img src={product.image} alt={product.name} />
+                  <div className="modal-product-info">
+                    <h4>{product.name}</h4>
+                    <p className="description">{product.description}</p>
+                    <p className="price">${product.price}</p>
+                    <button
+                      className="select-item-btn"
+                      onClick={() => selectItem(product)}
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
+        </div>
+      )}
+
+      <div className="build-actions">
+        <button className="add-build-to-cart-btn" onClick={addSelectedToCart}>
+          Add Complete Build to Cart
+        </button>
+      </div>
+
+      <div className="build-summary">
+        <h3>Build Summary</h3>
+        <div className="summary-items">
+          {categoryKeys.map((key, idx) => {
+            const item = build[key];
+            const hasItem = item && item.id && item.name && item.price;
+            return (
+              <div key={key} className="summary-item">
+                <span>{categories[idx]}:</span>
+                <span>{hasItem ? `${item.name} - $${item.price}` : 'Not selected'}</span>
+              </div>
+            );
+          })}
+        </div>
+        <div className="total-price">
+          <strong>Total: ${categoryKeys.reduce((sum, key) => sum + (build[key]?.price || 0), 0).toFixed(2)}</strong>
+        </div>
       </div>
     </div>
   );
 };
 
-export default ProductList;
+export default YourBuild;
