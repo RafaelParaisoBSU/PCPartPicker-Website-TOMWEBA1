@@ -12,7 +12,6 @@ import ssd1 from '../assets/products/ssd1.png';
 import case_img1 from '../assets/products/case1.png';
 import motherboard1 from '../assets/products/motherboard1.png';
 import '../styles/YourBuild.scss';
-import API_BASE_URL from '../config/apiConfig';
 
 const YourBuild = ({ onAddToCart, user, onShowModal }) => {
   const categories = ['CPU', 'Cooler', 'Motherboard', 'RAM', 'Storage', 'GPU', 'PSU', 'Case', 'Monitor'];
@@ -143,7 +142,7 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
         return;
       }
 
-      const response = await fetch(`${API_BASE_URL}/api/builds`, {
+      const response = await fetch('http://localhost:5000/api/builds', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -172,7 +171,7 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
         return;
       }
 
-      const response = await fetch(`${API_BASE_URL}/api/builds`, {
+      const response = await fetch('http://localhost:5000/api/builds', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
