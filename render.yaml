@@ -20,4 +20,4 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: https://pcpartpicker-api.onrender.com
+        value: https://pcpartpickerapi.onrender.com
