@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/Admin.scss";
+import API_BASE_URL from '../config/apiConfig';
 
 const Admin = ({ user, onShowModal }) => {
   const [users, setUsers] = useState([]);
@@ -22,7 +23,7 @@ const Admin = ({ user, onShowModal }) => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/auth/admin/users", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/admin/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -62,7 +63,7 @@ const Admin = ({ user, onShowModal }) => {
           text: "Delete",
           onClick: async () => {
             try {
-              const response = await fetch(`http://localhost:5000/api/auth/admin/users/${userId}`, {
+              const response = await fetch(`${API_BASE_URL}/api/auth/admin/users/${userId}`, {
                 method: "DELETE",
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -99,7 +100,7 @@ const Admin = ({ user, onShowModal }) => {
   const handleToggleAdmin = async (userId, currentAdminStatus, userName) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/auth/admin/users/${userId}/toggle-admin`,
+        `${API_BASE_URL}/api/auth/admin/users/${userId}/toggle-admin`,
         {
           method: "PATCH",
           headers: {
@@ -155,7 +156,7 @@ const Admin = ({ user, onShowModal }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/admin/users", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/admin/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

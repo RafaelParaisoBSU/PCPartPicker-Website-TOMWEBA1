@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../styles/Cart.scss';
 import Modal from './Modal';
+import API_BASE_URL from '../config/apiConfig';
 
 const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart }) => {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -40,7 +41,7 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
         }
       };
 
-      const res = await fetch('http://localhost:5000/api/orders', {
+      const res = await fetch(`${API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(order)

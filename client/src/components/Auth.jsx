@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Auth.scss';
+import API_BASE_URL from '../config/apiConfig';
 
 const Auth = ({ onShowModal, setUser }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -114,7 +115,7 @@ const Auth = ({ onShowModal, setUser }) => {
             lastName: formData.lastName
           };
 
-      const response = await fetch(`http://localhost:5000${endpoint}`, {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -192,7 +193,7 @@ const Auth = ({ onShowModal, setUser }) => {
       const decoded = JSON.parse(jsonPayload);
 
       // Send to backend
-      const backendResponse = await fetch('http://localhost:5000/api/auth/google', {
+      const backendResponse = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
