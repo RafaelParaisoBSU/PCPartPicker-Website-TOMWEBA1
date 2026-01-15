@@ -98,7 +98,6 @@ const Navbar = ({ cartComponent, user: userProp, setUser: setUserProp, onClearCa
             }}
             aria-label="Close menu"
           >
-            ×
           </button>
           <Link to="/" className={isActive('/')} onClick={() => setIsMenuOpen(false)}>
             Home

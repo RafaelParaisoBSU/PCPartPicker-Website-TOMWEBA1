@@ -92,28 +92,53 @@
         z-index: 1001;
 
         .close-menu {
-          display: flex;
-          position: sticky;
+          position: absolute;
           top: 1rem;
           right: 1rem;
+          background: rgba(variables.$bg-dark, 0.9);
+          border: 2px solid variables.$accent-color;
+          color: variables.$accent-color;
+          cursor: pointer;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          padding: 0;
+          backdrop-filter: blur(8px);
+          transition: all 0.3s ease;
+          z-index: 1002;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(variables.$bg-dark, 0.8);
-          border: none;
-          color: variables.$text-primary;
-          font-size: 2rem;
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          margin: -3rem -1rem 2rem auto;
-          backdrop-filter: blur(4px);
-          transition: all 0.2s;
-          z-index: 2;
+
+          // Create × using CSS for perfect centering
+          &::before,
+          &::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 2px;
+            background-color: currentColor;
+            border-radius: 1px;
+          }
+
+          &::before {
+            transform: rotate(45deg);
+          }
+
+          &::after {
+            transform: rotate(-45deg);
+          }
 
           &:hover {
             background: variables.$accent-color;
-            transform: rotate(90deg);
+            color: variables.$bg-dark;
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 4px 12px rgba(variables.$accent-color, 0.4);
+          }
+
+          &:active {
+            transform: rotate(90deg) scale(0.95);
           }
         }
 

@@ -125,6 +125,7 @@ const ProductList = ({ onAddToCart }) => {
     <div className="products">
       <h2>Available PC Parts</h2>
       
+      {/* Desktop: Button list */}
       <div className="category-filter">
         {categories.map(cat => (
           <button
@@ -135,6 +136,21 @@ const ProductList = ({ onAddToCart }) => {
             {cat}
           </button>
         ))}
+      </div>
+
+      {/* Mobile/Tablet: Dropdown */}
+      <div className="category-dropdown">
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="category-select"
+        >
+          {categories.map(cat => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="products-grid">
