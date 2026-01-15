@@ -19,8 +19,15 @@ const Auth = ({ onShowModal, setUser }) => {
     // Initialize Google Sign-In when component mounts
     const initializeGoogle = () => {
       if (window.google) {
+        const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+        
+        if (!googleClientId) {
+          console.warn('Google Client ID not configured. Please set VITE_GOOGLE_CLIENT_ID environment variable.');
+          return;
+        }
+
         window.google.accounts.id.initialize({
-          client_id: '320204018887-t1vq4mj3e3guuide4s47313oeaqk0ctj.apps.googleusercontent.com', 
+          client_id: '567044713006-v759hmi7jnhlnu148uvmlsatkau5oh3u.apps.googleusercontent.com', 
           callback: handleGoogleCallback,
         });
         
