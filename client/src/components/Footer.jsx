@@ -18,7 +18,7 @@ const Footer = () => {
         </div>
         <div className="footer-section">
           <h3>Contact Us</h3>
-          <p>Email: info@pcpartpicker.com</p>
+          <p>Email: rafaelparaiso.bsu@gmail.com</p>
           <p>Phone: (123) 456-7890</p>
         </div>
       </div>
