@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import case_img from '../assets/products/case.png';
-import rtx from '../assets/products/rtx.png';
-import rtx1 from '../assets/products/rtx1.png';
+import case5 from '../assets/products/case5.png';
+import case3 from '../assets/products/case3.png';
+import case4 from '../assets/products/case4.png';
 import '../styles/BuildGuides.scss';
 
 const BuildGuides = () => {
@@ -12,23 +12,23 @@ const BuildGuides = () => {
       description: 'Perfect for casual gaming and everyday tasks. Get started with PC gaming without breaking the bank.',
       price: '~$600',
       link: '/guides#entry',
-      image: case_img
+      image: case4
     },
     {
       id: 'mid-range',
       title: 'Mid-Range Build',
       description: 'The sweet spot for most gamers. Excellent 1080p and 1440p performance for modern games.',
-      price: '~$1,200',
+      price: '~$1,500',
       link: '/guides#mid-range',
-      image: rtx
+      image: case5
     },
     {
       id: 'high-end',
       title: 'High-End Build',
       description: 'Maximum performance for 4K gaming, content creation, and demanding workloads.',
-      price: '~$2,500',
+      price: '~$4,000',
       link: '/guides#high-end',
-      image: rtx1
+      image: case3
     }
   ];
 
