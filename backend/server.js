@@ -36,7 +36,13 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/dist')));
   
   // Handle React routing, return all requests to React app
-  app.get('*', (req, res) => {
+  // Use app.use instead of app.get('*') for Express 5 compatibility
+  app.use((req, res, next) => {
+    // Skip API routes
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    // Send React app for all other routes
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 } else {
