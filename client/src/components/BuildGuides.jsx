@@ -10,7 +10,7 @@ const BuildGuides = () => {
       id: 'entry',
       title: 'Entry-Level Build',
       description: 'Perfect for casual gaming and everyday tasks. Get started with PC gaming without breaking the bank.',
-      price: '~$600',
+      price: '~$850',
       link: '/guides#entry',
       image: case4
     },
@@ -18,7 +18,7 @@ const BuildGuides = () => {
       id: 'mid-range',
       title: 'Mid-Range Build',
       description: 'The sweet spot for most gamers. Excellent 1080p and 1440p performance for modern games.',
-      price: '~$1,500',
+      price: '~$1,700',
       link: '/guides#mid-range',
       image: case5
     },
