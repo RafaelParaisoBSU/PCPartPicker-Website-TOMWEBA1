@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import API_BASE_URL from '../config/api';
 import ryzen from '../assets/products/ryzen.png';
 import rtx from '../assets/products/rtx.png';
 import ram from '../assets/products/ram.png';
@@ -142,7 +143,7 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/api/builds', {
+      const response = await fetch(`${API_BASE_URL}/api/builds`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -171,7 +172,7 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/api/builds', {
+      const response = await fetch(`${API_BASE_URL}/api/builds`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

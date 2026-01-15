@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import API_BASE_URL from '../config/api';
 import '../styles/Contact.scss';
 import Modal from './Modal';
 
@@ -35,7 +36,7 @@ const Contact = () => {
 
     setIsSending(true);
     try {
-      const response = await fetch('http://localhost:5000/api/contacts', {
+      const response = await fetch(`${API_BASE_URL}/api/contacts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
