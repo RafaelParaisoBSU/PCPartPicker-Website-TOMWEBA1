@@ -5,7 +5,7 @@ import '../styles/Navbar.scss';
 const Navbar = ({ cartComponent, user: userProp, setUser: setUserProp, onClearCart }) => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [user, setUser] = useState(userProp || null);
   const navRef = useRef(null);
 
@@ -25,8 +25,8 @@ const Navbar = ({ cartComponent, user: userProp, setUser: setUserProp, onClearCa
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 480);
-      if (window.innerWidth > 480) {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
         setIsMenuOpen(false);
       }
     };
@@ -104,6 +104,9 @@ const Navbar = ({ cartComponent, user: userProp, setUser: setUserProp, onClearCa
           </Link>
           <Link to="/your-build" className={isActive('/your-build')} onClick={() => setIsMenuOpen(false)}>
             Your Build
+          </Link>
+          <Link to="/guides" className={isActive('/guides')} onClick={() => setIsMenuOpen(false)}>
+            Guides
           </Link>
           <Link to="/about" className={isActive('/about')} onClick={() => setIsMenuOpen(false)}>
             About

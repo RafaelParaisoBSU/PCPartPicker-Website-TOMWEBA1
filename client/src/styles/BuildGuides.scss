@@ -1,0 +1,183 @@
+@use '../styles/variables';
+
+.build-guides {
+  padding: 3rem 2rem;
+  background-color: variables.$bg-card;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media (max-width: 481px) {
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .build-guides-container {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .build-guides-title {
+      font-size: 4rem;
+      font-weight: 700;
+      color: variables.$text-primary;
+      text-align: center;
+      margin-bottom: 0.5rem;
+
+      @media (max-width: 768px) {
+        font-size: 2rem;
+      }
+
+      @media (max-width: 481px) {
+        font-size: 1.75rem;
+      }
+    }
+
+    .build-guides-subtitle {
+      font-size: 1.5rem;
+      color: variables.$text-secondary;
+      text-align: center;
+      margin-bottom: 3rem;
+
+      @media (max-width: 481px) {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .guide-card {
+        background-color: variables.$bg-dark;
+        border: 2px solid variables.$border-color;
+        border-radius: 12px;
+        padding: 2rem;
+        text-decoration: none;
+        color: variables.$text-primary;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        @include variables.card-hover;
+
+        &:hover {
+          border-color: variables.$accent-color;
+          transform: translateY(-4px);
+          box-shadow: 0 8px 20px rgba(variables.$accent-color, 0.2);
+        }
+
+        @media (max-width: 481px) {
+          padding: 1.5rem;
+        }
+
+        .guide-image-container {
+          width: 100%;
+          height: 200px;
+          margin-bottom: 1.5rem;
+          border-radius: 8px;
+          overflow: hidden;
+          background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+
+          @media (max-width: 768px) {
+            height: 180px;
+          }
+
+          @media (max-width: 481px) {
+            height: 150px;
+            margin-bottom: 1rem;
+          }
+
+          .guide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+          }
+        }
+
+        &:hover .guide-image-container .guide-image {
+          transform: scale(1.05);
+        }
+
+        .guide-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1rem;
+          gap: 1rem;
+
+          .guide-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: variables.$text-primary;
+            margin: 0;
+            flex: 1;
+
+            @media (max-width: 481px) {
+              font-size: 1.25rem;
+            }
+          }
+
+          .guide-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: variables.$accent-color;
+            white-space: nowrap;
+
+            @media (max-width: 481px) {
+              font-size: 1.1rem;
+            }
+          }
+        }
+
+        .guide-description {
+          font-size: 1rem;
+          color: variables.$text-secondary;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+          flex: 1;
+
+          @media (max-width: 481px) {
+            font-size: 0.9rem;
+          }
+        }
+
+        .guide-link {
+          font-size: 1rem;
+          color: variables.$accent-color;
+          font-weight: 600;
+          margin-top: auto;
+          transition: all 0.3s ease;
+
+          @media (max-width: 481px) {
+            font-size: 0.9rem;
+          }
+        }
+
+        &:hover .guide-link {
+          transform: translateX(5px);
+        }
+      }
+    }
+  }
+}

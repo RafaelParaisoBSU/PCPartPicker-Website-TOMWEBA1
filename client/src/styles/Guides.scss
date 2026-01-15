@@ -1,0 +1,275 @@
+@use '../styles/variables';
+
+.guides-page {
+  min-height: calc(100vh - 200px);
+  padding: 0;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+
+  @media (max-width: 481px) {
+    padding: 0;
+  }
+
+  .guides-header {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    @media (max-width: 481px) {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: variables.$text-primary;
+      margin-bottom: 1rem;
+
+      @media (max-width: 768px) {
+        font-size: 2.5rem;
+      }
+
+      @media (max-width: 481px) {
+        font-size: 2rem;
+      }
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: variables.$text-secondary;
+
+      @media (max-width: 481px) {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .guides-content {
+    width: 100%;
+
+    .guides-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+
+      @media (max-width: 768px) {
+        gap: 3rem;
+      }
+
+      @media (max-width: 481px) {
+        gap: 2rem;
+      }
+
+      .build-section {
+        background-color: variables.$bg-card;
+        border-radius: 16px;
+        padding: 3rem;
+        border: 2px solid variables.$border-color;
+        scroll-margin-top: 2rem;
+
+        @media (max-width: 768px) {
+          padding: 2rem;
+        }
+
+        @media (max-width: 481px) {
+          padding: 1.5rem;
+        }
+
+        .build-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+
+          h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: variables.$text-primary;
+            margin: 0;
+
+            @media (max-width: 768px) {
+              font-size: 2rem;
+            }
+
+            @media (max-width: 481px) {
+              font-size: 1.75rem;
+            }
+          }
+
+          .build-price-badge {
+            background: linear-gradient(135deg, variables.$primary-color 0%, variables.$accent-color 100%);
+            color: variables.$text-primary;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(variables.$accent-color, 0.3);
+
+            @media (max-width: 481px) {
+              font-size: 1.25rem;
+              padding: 0.5rem 1rem;
+            }
+          }
+        }
+
+        .build-description {
+          font-size: 1.1rem;
+          color: variables.$text-secondary;
+          line-height: 1.7;
+          margin-bottom: 2.5rem;
+
+          @media (max-width: 481px) {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+          }
+        }
+
+        .build-parts {
+          margin-bottom: 2rem;
+
+          h3 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: variables.$text-primary;
+            margin-bottom: 1.5rem;
+
+            @media (max-width: 481px) {
+              font-size: 1.5rem;
+            }
+          }
+
+          .parts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+
+            .part-item {
+              display: flex;
+              gap: 1.5rem;
+              background-color: variables.$bg-dark;
+              border: 1px solid variables.$border-color;
+              border-radius: 12px;
+              padding: 1.5rem;
+              transition: all 0.3s ease;
+
+              &:hover {
+                border-color: variables.$accent-color;
+                transform: translateX(5px);
+                box-shadow: 0 4px 12px rgba(variables.$accent-color, 0.1);
+              }
+
+              @media (max-width: 768px) {
+                flex-direction: column;
+                gap: 1rem;
+              }
+
+              @media (max-width: 481px) {
+                padding: 1rem;
+              }
+
+              .part-image {
+                width: 120px;
+                height: 120px;
+                object-fit: contain;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                border-radius: 8px;
+                padding: 0.5rem;
+                flex-shrink: 0;
+
+                @media (max-width: 768px) {
+                  width: 100%;
+                  height: 200px;
+                }
+
+                @media (max-width: 481px) {
+                  height: 150px;
+                }
+              }
+
+              .part-info {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                h4 {
+                  font-size: 1.25rem;
+                  font-weight: 600;
+                  color: variables.$text-primary;
+                  margin: 0;
+
+                  @media (max-width: 481px) {
+                    font-size: 1.1rem;
+                  }
+                }
+
+                .part-category {
+                  font-size: 0.9rem;
+                  color: variables.$accent-color;
+                  font-weight: 500;
+                  margin: 0;
+                }
+
+                .part-description {
+                  font-size: 0.95rem;
+                  color: variables.$text-secondary;
+                  line-height: 1.5;
+                  margin: 0;
+                  flex: 1;
+
+                  @media (max-width: 481px) {
+                    font-size: 0.85rem;
+                  }
+                }
+
+                .part-price {
+                  font-size: 1.25rem;
+                  font-weight: 700;
+                  color: variables.$accent-color;
+                  margin: 0;
+                  margin-top: auto;
+
+                  @media (max-width: 481px) {
+                    font-size: 1.1rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .add-build-button {
+          width: 100%;
+          padding: 1.25rem 2rem;
+          background: linear-gradient(135deg, variables.$primary-color 0%, variables.$accent-color 100%);
+          color: variables.$text-primary;
+          border: none;
+          border-radius: 8px;
+          font-size: 1.1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(variables.$accent-color, 0.3);
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(variables.$accent-color, 0.5);
+            background: linear-gradient(135deg, variables.$accent-color 0%, variables.$primary-color 100%);
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+
+          @media (max-width: 481px) {
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

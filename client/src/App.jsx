@@ -10,6 +10,9 @@ import Footer from "./components/Footer";
 import Modal from "./components/Modal";
 import Auth from "./components/Auth";
 import Admin from "./components/Admin";
+import Hero from "./components/Hero";
+import BuildGuides from "./components/BuildGuides";
+import Guides from "./components/Guides";
 import "./styles/App.scss";
 
 const App = () => {
@@ -120,9 +123,18 @@ const App = () => {
         <Routes>
           <Route path="/" element={
             <main className="main-content">
-              <h2 className="main-heading">Welcome to PCPartPicker!</h2>
+              <Hero />
+              <BuildGuides />
               <div className="content-layout">
                 <ProductList onAddToCart={handleAddToCart} />
+                {!isMobile && cartComponent}
+              </div>
+            </main>
+          } />
+          <Route path="/guides" element={
+            <main className="main-content">
+              <div className="content-layout">
+                <Guides onAddToCart={handleAddToCart} onShowModal={setModal} />
                 {!isMobile && cartComponent}
               </div>
             </main>
