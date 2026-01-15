@@ -69,6 +69,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
+    color: black;
 
     @media (max-width: 640px) {
       grid-template-columns: 1fr;
@@ -92,6 +93,7 @@
     border: 1px solid #d1d5db;
     border-radius: 6px;
     font-size: 1rem;
+    color: black;
     transition: border-color 0.3s ease;
 
     &:focus {
