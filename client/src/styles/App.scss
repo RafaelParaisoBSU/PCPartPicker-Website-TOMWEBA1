@@ -16,6 +16,11 @@ body {
         margin: 0 auto;
         padding: 2rem;
 
+        @media (max-width: 768px) {
+            margin-top: 1rem;
+            padding: 0.5rem;
+        }
+
         .main-heading {
             color: variables.$text-primary;
             text-align: center;
