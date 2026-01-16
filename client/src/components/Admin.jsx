@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import API_BASE_URL from "../config/api";
 import "../styles/Admin.scss";
 
+// Admin panel component for managing users
 const Admin = ({ user, onShowModal }) => {
+  // State management
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -15,11 +17,12 @@ const Admin = ({ user, onShowModal }) => {
 
   const token = localStorage.getItem("authToken");
 
-  // Fetch all users
+  // Fetch users on component mount
   useEffect(() => {
     fetchUsers();
   }, []);
 
+  // Fetch all users from API
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -48,6 +51,7 @@ const Admin = ({ user, onShowModal }) => {
     }
   };
 
+  // Delete user with confirmation
   const handleDeleteUser = (userId, userName) => {
     onShowModal({
       isOpen: true,
@@ -74,6 +78,7 @@ const Admin = ({ user, onShowModal }) => {
                 throw new Error("Failed to delete user");
               }
 
+              // Remove user from local state
               setUsers(users.filter((u) => u._id !== userId));
               onShowModal({
                 isOpen: true,
@@ -97,6 +102,7 @@ const Admin = ({ user, onShowModal }) => {
     });
   };
 
+  // Toggle user admin status
   const handleToggleAdmin = async (userId, currentAdminStatus, userName) => {
     try {
       const response = await fetch(
@@ -114,6 +120,8 @@ const Admin = ({ user, onShowModal }) => {
       }
 
       const data = await response.json();
+      
+      // Update user in local state
       setUsers(
         users.map((u) => (u._id === userId ? { ...u, isAdmin: data.user.isAdmin } : u))
       );
@@ -136,9 +144,11 @@ const Admin = ({ user, onShowModal }) => {
     }
   };
 
+  // Create new user
   const handleAddUser = async (e) => {
     e.preventDefault();
 
+    // Validate all fields filled
     if (
       !formData.firstName ||
       !formData.lastName ||
@@ -171,7 +181,11 @@ const Admin = ({ user, onShowModal }) => {
       }
 
       const data = await response.json();
+      
+      // Add new user to local state
       setUsers([...users, data.user]);
+      
+      // Reset form
       setFormData({ firstName: "", lastName: "", email: "", password: "" });
       setShowAddForm(false);
 
@@ -193,6 +207,7 @@ const Admin = ({ user, onShowModal }) => {
     }
   };
 
+  // Update form field values
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -201,6 +216,7 @@ const Admin = ({ user, onShowModal }) => {
     }));
   };
 
+  // Check if user has admin access
   if (!user || !user.isAdmin) {
     return (
       <div className="admin-container">
@@ -212,6 +228,7 @@ const Admin = ({ user, onShowModal }) => {
     );
   }
 
+  // Show loading state
   if (loading) {
     return (
       <div className="admin-container">
@@ -222,6 +239,7 @@ const Admin = ({ user, onShowModal }) => {
 
   return (
     <div className="admin-container">
+      {/* Header with add user button */}
       <div className="admin-header">
         <h1>Admin Panel</h1>
         <button
@@ -232,6 +250,7 @@ const Admin = ({ user, onShowModal }) => {
         </button>
       </div>
 
+      {/* Add user form (conditional) */}
       {showAddForm && (
         <div className="admin-add-user-form">
           <h2>Create New User</h2>
@@ -287,6 +306,7 @@ const Admin = ({ user, onShowModal }) => {
         </div>
       )}
 
+      {/* Users table */}
       <div className="admin-users-section">
         <h2>User Management ({users.length} users)</h2>
         <div className="admin-table">
@@ -320,6 +340,7 @@ const Admin = ({ user, onShowModal }) => {
                   </td>
                   <td>{new Date(u.createdAt).toLocaleDateString()}</td>
                   <td className="actions-cell">
+                    {/* Toggle admin button */}
                     <button
                       className={`btn-toggle-admin ${u.isAdmin ? "remove" : "make"}`}
                       onClick={() =>
@@ -330,6 +351,7 @@ const Admin = ({ user, onShowModal }) => {
                     >
                       {u.isAdmin ? "Remove Admin" : "Make Admin"}
                     </button>
+                    {/* Delete user button */}
                     <button
                       className="btn-delete"
                       onClick={() =>

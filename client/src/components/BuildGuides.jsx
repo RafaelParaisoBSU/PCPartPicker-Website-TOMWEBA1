@@ -4,7 +4,9 @@ import case3 from '../assets/products/case3.png';
 import case4 from '../assets/products/case4.png';
 import '../styles/BuildGuides.scss';
 
+// Build guides section component - displays PC build recommendations
 const BuildGuides = () => {
+  // Build guide configurations
   const guides = [
     {
       id: 'entry',
@@ -35,8 +37,11 @@ const BuildGuides = () => {
   return (
     <section className="build-guides">
       <div className="build-guides-container">
+        {/* Section header */}
         <h2 className="build-guides-title">Build Guides</h2>
         <p className="build-guides-subtitle">Choose the perfect build for your needs</p>
+        
+        {/* Build guide cards grid */}
         <div className="guides-grid">
           {guides.map((guide) => (
             <Link 
@@ -44,14 +49,21 @@ const BuildGuides = () => {
               to={guide.link} 
               className="guide-card"
             >
+              {/* Build image */}
               <div className="guide-image-container">
                 <img src={guide.image} alt={guide.title} className="guide-image" />
               </div>
+              
+              {/* Build title and price */}
               <div className="guide-header">
                 <h3 className="guide-title">{guide.title}</h3>
                 <span className="guide-price">{guide.price}</span>
               </div>
+              
+              {/* Build description */}
               <p className="guide-description">{guide.description}</p>
+              
+              {/* Link indicator */}
               <span className="guide-link">View Build →</span>
             </Link>
           ))}

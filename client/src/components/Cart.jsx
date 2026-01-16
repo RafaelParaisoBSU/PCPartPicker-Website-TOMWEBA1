@@ -3,7 +3,9 @@ import API_BASE_URL from '../config/api';
 import '../styles/Cart.scss';
 import Modal from './Modal';
 
+// Shopping cart component - displays items and handles checkout
 const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart }) => {
+  // State management
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -12,8 +14,10 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
   });
   const [showConfirmClear, setShowConfirmClear] = useState(false);
 
+  // Calculate total price
   const total = items.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
 
+  // Update form field values
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -22,9 +26,11 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
     }));
   };
 
+  // Process checkout and place order
   const handleCheckout = async (e) => {
     e.preventDefault();
     try {
+      // Prepare order data
       const order = {
         items: items.map(it => ({
           productId: it.id || it._id || null,
@@ -41,6 +47,7 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
         }
       };
 
+      // Submit order to backend
       const res = await fetch(`${API_BASE_URL}/api/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -52,6 +59,7 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
         throw new Error(err.error || 'Failed to place order');
       }
 
+      // Generate order summary HTML
       const orderSummaryHTML = `
         <div class="order-summary">
           <p class="thank-you">Thank you for your order, ${formData.name}!</p>
@@ -83,17 +91,21 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
         </div>
       `;
 
+      // Show success modal with order details
       onShowModal({
         isOpen: true,
         type: 'success',
         title: 'Order Placed Successfully!',
         message: orderSummaryHTML
       });
+      
+      // Reset form and state
       setFormData({ name: '', email: '', address: ''});
       setIsCheckingOut(false);
       if (typeof onOrderPlaced === 'function') onOrderPlaced();
     } catch (error) {
       console.error('Checkout error:', error);
+      // Show error modal
       onShowModal({
         isOpen: true,
         type: 'error',
@@ -106,14 +118,20 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
   return (
     <div className="cart">
       <h2>Shopping Cart</h2>
+      
+      {/* Empty cart message */}
       {items.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         <>
+          {/* Cart items list */}
           <div className="cart-items">
             {items.map((item, index) => (
-                <div key={index} className="cart-item">
+              <div key={index} className="cart-item">
+                {/* Item image */}
                 {item.image && <img src={item.image} alt={item.name} className="cart-item-image" />}
+                
+                {/* Item details */}
                 <div className="cart-item-details">
                   <span className="item-name">{item.name}</span>
                   <div className="item-price-quantity">
@@ -123,22 +141,29 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
                     )}
                   </div>
                 </div>
+                
+                {/* Remove item button */}
                 <button className="remove-btn" onClick={() => onRemoveFromCart(index)}>
                   {item.quantity > 1 ? 'Remove One' : 'Remove'}
                 </button>
               </div>
             ))}
           </div>
+          
+          {/* Cart total and action buttons */}
           <div className="cart-total">
             <strong>Total: ${total.toFixed(2)}</strong>
             {!isCheckingOut && (
               <div className="cart-buttons">
+                {/* Proceed to checkout button */}
                 <button 
                   className="checkout-btn"
                   onClick={() => setIsCheckingOut(true)}
                 >
                   Proceed to Checkout
                 </button>
+                
+                {/* Clear cart button */}
                 <button 
                   className="clear-cart-btn"
                   onClick={() => {
@@ -171,9 +196,12 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
             )}
           </div>
 
+          {/* Checkout form (conditional) */}
           {isCheckingOut && (
             <form onSubmit={handleCheckout} className="checkout-form">
               <h3>Checkout Information</h3>
+              
+              {/* Name input */}
               <div className="form-group">
                 <input
                   type="text"
@@ -184,6 +212,8 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
                   required
                 />
               </div>
+              
+              {/* Email input */}
               <div className="form-group">
                 <input
                   type="email"
@@ -194,6 +224,8 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
                   required
                 />
               </div>
+              
+              {/* Address input */}
               <div className="form-group">
                 <textarea
                   name="address"
@@ -203,9 +235,13 @@ const Cart = ({ items, onRemoveFromCart, onOrderPlaced, onShowModal, onClearCart
                   required
                 />
               </div>
+              
+              {/* Submit button */}
               <button type="submit" className="place-order-btn">
                 Place Order
               </button>
+              
+              {/* Cancel button */}
               <button 
                 type="button" 
                 className="cancel-btn"

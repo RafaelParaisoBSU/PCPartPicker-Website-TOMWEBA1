@@ -6,11 +6,14 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware setup
 app.use(cors());
 app.use(express.json());
 
+// MongoDB connection string
 const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://rafaelparaisobsu:OmgItsMystic1@cluster0.bon9u.mongodb.net/pcpartpicker?retryWrites=true&w=majority&appName=Cluster0';
 
+// Connect to MongoDB
 mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('✅ Connected to MongoDB');
@@ -20,38 +23,38 @@ mongoose.connect(MONGO_URI)
     process.exit(1);
   });
 
+// Import route handlers
 const ordersRouter = require('./routes/orders');
 const contactsRouter = require('./routes/contacts');
 const authRouter = require('./routes/auth');
 const buildsRouter = require('./routes/builds');
 
+// API routes
 app.use('/api/orders', ordersRouter);
 app.use('/api/contacts', contactsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/builds', buildsRouter);
 
-// Serve static files from the React app in production
+// Production mode: serve built React app
 if (process.env.NODE_ENV === 'production') {
-  // Serve static files from the React app build directory
+  // Serve static files from React build
   app.use(express.static(path.join(__dirname, '../client/dist')));
   
-  // Handle React routing, return all requests to React app
-  // Use app.use instead of app.get('*') for Express 5 compatibility
+  // Handle React routing - send all non-API requests to index.html
   app.use((req, res, next) => {
-    // Skip API routes
     if (req.path.startsWith('/api')) {
       return next();
     }
-    // Send React app for all other routes
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 } else {
-  // Development mode - just return API message
+  // Development mode: simple status endpoint
   app.get('/', (req, res) => {
     res.json({ message: 'Server is running!' });
   });
 }
 
+// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
   if (process.env.NODE_ENV === 'production') {

@@ -70,7 +70,7 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
   const categoryKeys = ['cpu', 'cooler', 'motherboard', 'ram', 'storage', 'gpu', 'psu', 'case', 'monitor'];
 
   const allProducts = [
-    // CPUs
+
     { id: 1, name: 'AMD Ryzen 7 5800X', category: 'CPU', price: 184.99, image: cpu1, description: '8-core / 16-thread AM4 processor, great for gaming and productivity.' },
     { id: 7, name: 'AMD Ryzen 9 9950X3D', category: 'CPU', price: 699.99, image: cpu2, description: '16-core / 32-thread AM5 CPU for top-tier gaming performance.' },
     { id: 101, name: 'Intel Core i9-14900K', category: 'CPU', price: 589.99, image: cpu3, description: '24-core / 32-thread processor for extreme gaming and workstation use.' },
@@ -78,14 +78,13 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
     { id: 103, name: 'Intel Core i7-14700K', category: 'CPU', price: 409.99, image: cpu5, description: '20-core / 28-thread high-performance CPU with P-cores and E-cores.' },
     { id: 104, name: 'AMD Ryzen 9 7950X', category: 'CPU', price: 549.99, image: cpu6, description: '16-core / 32-thread powerhouse for content creation and gaming.' },
 
-    // GPUs
     { id: 2, name: 'NVIDIA RTX 3080', category: 'GPU', price: 449.99, image: gpu1, description: '10GB GDDR6X GPU built for high-FPS 1440p and 4K gaming performance.' },
     { id: 8, name: 'NVIDIA RTX 5090', category: 'GPU', price: 1999.99, image: gpu2, description: '32GB GDDR7 flagship GPU for extreme 4K/8K gaming and AI workloads.' },
     { id: 108, name: 'AMD Radeon RX 7900 XTX', category: 'GPU', price: 649.99, image: gpu3, description: '24GB GDDR6 memory with RDNA 3 architecture for competitive gaming.' },
     { id: 109, name: 'NVIDIA RTX 4080 Super', category: 'GPU', price: 799.99, image: gpu4, description: '16GB GDDR6X high-end GPU perfect for 4K gaming and content creation.' },
     { id: 110, name: 'Intel Arc A770', category: 'GPU', price: 329.99, image: gpu5, description: '8GB GDDR6 budget-friendly discrete graphics with ray tracing.' },
     { id: 111, name: 'NVIDIA RTX 4070 Ti', category: 'GPU', price: 749.99, image: gpu6, description: '12GB GDDR6X powerful GPU for 1440p high refresh rate gaming.' },
-    // RAM
+
     { id: 3, name: 'Corsair 32GB DDR4', category: 'RAM', price: 124.99, image: ram1, description: '32GB high-speed DDR4 memory kit for smooth multitasking and gaming.' },
     { id: 9, name: 'Corsair 128GB DDR5', category: 'RAM', price: 299.99, image: ram2, description: 'Massive 128GB DDR5 kit for heavy workloads, content creation & servers.' },
     { id: 115, name: 'G.Skill Trident Z5 32GB DDR5', category: 'RAM', price: 129.99, image: ram3, description: '32GB DDR5 6000MHz high-speed memory with RGB lighting.' },
@@ -93,7 +92,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
     { id: 117, name: 'Corsair DP 64GB DDR5', category: 'RAM', price: 249.99, image: ram5, description: '64GB DDR5 6000MHz dual-channel kit for ultimate performance.' },
     { id: 118, name: 'Crucial 16GB DDR5', category: 'RAM', price: 64.99, image: ram6, description: '16GB DDR5 5600MHz affordable memory for mainstream builds.' },
 
-    // Storage
     { id: 4, name: 'Samsung 1TB NVMe SSD', category: 'Storage', price: 79.99, image: ssd1, description: 'Fast NVMe SSD with quick load times and responsive system storage.' },
     { id: 10, name: 'Samsung 2TB NVMe SSD', category: 'Storage', price: 129.99, image: ssd2, description: 'High-performance 2TB NVMe SSD sized for games, media & work.' },
     { id: 122, name: 'WD Black SN850X 1TB', category: 'Storage', price: 99.99, image: ssd3, description: '1TB PCIe 4.0 NVMe SSD with excellent speed and reliability.' },
@@ -101,7 +99,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
     { id: 124, name: 'Samsung 990 Pro 4TB', category: 'Storage', price: 349.99, image: ssd5, description: '4TB PCIe 4.0 ultra-fast NVMe with heatsink for content creators.' },
     { id: 125, name: 'Sabrent Rocket 4 Plus 2TB', category: 'Storage', price: 159.99, image: ssd6, description: '2TB PCIe 4.0 high-speed SSD with excellent performance.' },
 
-    // Cases
     { id: 5, name: 'NZXT H510 Flow', category: 'Case', price: 99.99, image: case1, description: 'Clean minimalist mid-tower case with good airflow and cable management.' },
     { id: 11, name: 'NZXT H510 Elite', category: 'Case', price: 159.99, image: case2, description: 'Premium H510 variant with dual tempered-glass and RGB fans included.' },
     { id: 129, name: 'Corsair 5000T RGB', category: 'Case', price: 379.99, image: case3, description: 'Massive full-tower case with excellent cooling and cable management.' },
@@ -109,7 +106,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
     { id: 131, name: 'Phanteks Ecl P500A D-RGB', category: 'Case', price: 149.99, image: case5, description: 'High-airflow mesh case with integrated RGB fans.' },
     { id: 132, name: 'Corsair Crystal 570X RGB', category: 'Case', price: 169.99, image: case6, description: 'Stylish transparent case with excellent GPU and cooler support.' },
 
-    // Motherboards
     { id: 6, name: 'MSI B650', category: 'Motherboard', price: 169.99, image: motherboard1, description: 'AM5 motherboard supporting Ryzen 7000/9000 CPUs, DDR5 & PCIe 5.0.' },
     { id: 12, name: 'ASUS GAMING X870', category: 'Motherboard', price: 249.99, image: motherboard2, description: 'High-end X870 motherboard with DDR5, PCIe 5.0 & Ryzen 9000 support.' },
     { id: 136, name: 'ASUS TUF Gaming X870-E', category: 'Motherboard', price: 279.99, image: motherboard3, description: 'Flagship X870-E with premium power delivery and cooling solutions.' },
@@ -117,7 +113,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
     { id: 138, name: 'MSI MPG B850E Edge', category: 'Motherboard', price: 249.99, image: motherboard5, description: 'High-performance B850E board with excellent connectivity.' },
     { id: 139, name: 'Intel Z790 Maximus Hero', category: 'Motherboard', price: 349.99, image: motherboard6, description: 'Premium Intel Z790 for high-end Intel 13th gen processors.' },
 
-    // Coolers
     { id: 13, name: 'Noctua NH-D15', category: 'Cooler', price: 89.99, image: cooler1, description: 'Premium air cooler with exceptional cooling performance.' },
     { id: 143, name: 'Corsair H150i Elite Capellix', category: 'Cooler', price: 169.99, image: cooler2, description: '360mm AIO liquid cooler with RGB and excellent performance.' },
     { id: 144, name: 'be quiet! Dark Rock Pro 4', category: 'Cooler', price: 79.99, image: cooler3, description: 'High-performance air cooler with silent operation.' },
@@ -125,7 +120,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
     { id: 146, name: 'Thermalright PE 120 SE', category: 'Cooler', price: 34.99, image: cooler5, description: 'Budget-friendly high-performance air cooler.' },
     { id: 147, name: 'Corsair ML120 PRO RGB', category: 'Cooler', price: 49.99, image: cooler6, description: 'High-performance 120mm RGB fan for custom cooling.' },
 
-    // PSUs
     { id: 14, name: 'Corsair RM850x', category: 'PSU', price: 119.99, image: psu1, description: '850W 80+ Gold certified power supply for reliable performance.' },
     { id: 151, name: 'EVGA SuperNOVA 850 G6', category: 'PSU', price: 99.99, image: psu2, description: '850W 80+ Gold with excellent efficiency and warranty.' },
     { id: 152, name: 'Seasonic Focus Gold 1000W', category: 'PSU', price: 149.99, image: psu3, description: '1000W 80+ Gold premium PSU for high-end builds.' },
@@ -133,7 +127,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
     { id: 154, name: 'MSI MPG A750GF', category: 'PSU', price: 89.99, image: psu5, description: '750W fully modular 80+ Gold with 10-year warranty.' },
     { id: 155, name: 'Thermaltake TP GF1 850W', category: 'PSU', price: 109.99, image: psu6, description: '850W fully modular with excellent ripple suppression.' },
 
-    // Monitors
     { id: 159, name: 'Dell S2721DGF', category: 'Monitor', price: 299.99, image: monitor1, description: '27" 1440p 165Hz IPS gaming monitor with G-Sync support.' },
     { id: 160, name: 'ASUS ROG Swift PG279Q', category: 'Monitor', price: 449.99, image: monitor2, description: '27" 1440p 165Hz IPS premium gaming monitor with excellent colors.' },
     { id: 161, name: 'LG 27GP850-B', category: 'Monitor', price: 349.99, image: monitor3, description: '27" 1440p 180Hz Nano IPS monitor perfect for competitive gaming.' },
@@ -148,12 +141,10 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
   const [selectedCategory, setSelectedCategory] = useState('CPU');
   const [loading, setLoading] = useState(true);
 
-  // Load build from user account on mount or when user changes
   useEffect(() => {
     if (user && user.id) {
       loadBuild();
     } else {
-      // Clear build when user logs out
       setBuild({});
       setLoading(false);
     }
@@ -177,7 +168,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
         const buildData = await response.json();
         setBuild(buildData);
       } else if (response.status === 401) {
-        // Token invalid, clear it
         localStorage.removeItem('authToken');
         setBuild({});
       }
@@ -257,7 +247,6 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
       return;
     }
 
-    // Collect all items to add
     const itemsToAdd = [];
     categoryKeys.forEach(key => {
       if (build[key] && build[key].id) {
@@ -273,10 +262,8 @@ const YourBuild = ({ onAddToCart, user, onShowModal }) => {
       }
     });
 
-    // Add all items to cart
     itemsToAdd.forEach(item => onAddToCart(item));
 
-    // Show success modal
     if (onShowModal) {
       const totalPrice = itemsToAdd.reduce((sum, item) => sum + item.price, 0);
       onShowModal({

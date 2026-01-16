@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config/api';
 import '../styles/Auth.scss';
 
+// Authentication page component - handles login and signup
 const Auth = ({ onShowModal, setUser }) => {
+  // State management
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
@@ -15,23 +17,25 @@ const Auth = ({ onShowModal, setUser }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Initialize Google Sign-In button
   useEffect(() => {
-    // Initialize Google Sign-In when component mounts
     const initializeGoogle = () => {
       if (window.google) {
         const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
         
+        // Check if Google Client ID is configured
         if (!googleClientId) {
           console.warn('Google Client ID not configured. Please set VITE_GOOGLE_CLIENT_ID environment variable.');
           return;
         }
 
+        // Initialize Google OAuth
         window.google.accounts.id.initialize({
           client_id: '567044713006-v759hmi7jnhlnu148uvmlsatkau5oh3u.apps.googleusercontent.com', 
           callback: handleGoogleCallback,
         });
         
-        // Clear and render the Google button
+        // Render Google Sign-In button
         const buttonContainer = document.getElementById('googleButtonContainer');
         if (buttonContainer) {
           buttonContainer.innerHTML = '';
@@ -43,11 +47,10 @@ const Auth = ({ onShowModal, setUser }) => {
       }
     };
 
-    // If script already loaded, initialize directly
+    // Load Google SDK if not already loaded
     if (window.google) {
       initializeGoogle();
     } else {
-      // Load Google Sign-In script
       const script = document.createElement('script');
       script.src = 'https://accounts.google.com/gsi/client';
       script.async = true;
@@ -57,6 +60,7 @@ const Auth = ({ onShowModal, setUser }) => {
     }
   }, []);
 
+  // Update form field values
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -65,17 +69,19 @@ const Auth = ({ onShowModal, setUser }) => {
     }));
   };
 
+  // Validate email format
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
+  // Handle form submission (login/signup)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // Validation
+      // Validate email format
       if (!validateEmail(formData.email)) {
         onShowModal({
           isOpen: true,
@@ -88,6 +94,7 @@ const Auth = ({ onShowModal, setUser }) => {
         return;
       }
 
+      // Validate password length
       if (formData.password.length < 6) {
         onShowModal({
           isOpen: true,
@@ -100,6 +107,7 @@ const Auth = ({ onShowModal, setUser }) => {
         return;
       }
 
+      // Validate password confirmation (signup only)
       if (!isLogin && formData.password !== formData.confirmPassword) {
         onShowModal({
           isOpen: true,
@@ -112,6 +120,7 @@ const Auth = ({ onShowModal, setUser }) => {
         return;
       }
 
+      // Prepare API request
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
       const payload = isLogin 
         ? { email: formData.email, password: formData.password }
@@ -122,6 +131,7 @@ const Auth = ({ onShowModal, setUser }) => {
             lastName: formData.lastName
           };
 
+      // Send authentication request
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -131,18 +141,19 @@ const Auth = ({ onShowModal, setUser }) => {
       const data = await response.json();
 
       if (response.ok) {
-        // Store token in localStorage
+        // Save auth data to localStorage
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         
-        // Update parent component with user data
+        // Update user state
         if (setUser) {
           setUser(data.user);
         }
         
-        // Dispatch custom event to update navbar
+        // Dispatch user update event
         window.dispatchEvent(new CustomEvent('userUpdated', { detail: data.user }));
 
+        // Show success message and redirect
         onShowModal({
           isOpen: true,
           type: 'success',
@@ -157,6 +168,7 @@ const Auth = ({ onShowModal, setUser }) => {
           }]
         });
       } else {
+        // Show error message
         onShowModal({
           isOpen: true,
           type: 'error',
@@ -166,6 +178,7 @@ const Auth = ({ onShowModal, setUser }) => {
         });
       }
     } catch (error) {
+      // Handle network errors
       onShowModal({
         isOpen: true,
         type: 'error',
@@ -179,6 +192,7 @@ const Auth = ({ onShowModal, setUser }) => {
     }
   };
 
+  // Handle Google OAuth callback
   const handleGoogleCallback = async (response) => {
     try {
       setLoading(true);
@@ -187,7 +201,7 @@ const Auth = ({ onShowModal, setUser }) => {
         throw new Error('No credential received from Google');
       }
 
-      // Decode the JWT token from Google
+      // Decode Google JWT token
       const token = response.credential;
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -199,7 +213,7 @@ const Auth = ({ onShowModal, setUser }) => {
       );
       const decoded = JSON.parse(jsonPayload);
 
-      // Send to backend
+      // Send Google user data to backend
       const backendResponse = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -215,17 +229,19 @@ const Auth = ({ onShowModal, setUser }) => {
       const data = await backendResponse.json();
 
       if (backendResponse.ok) {
+        // Save auth data to localStorage
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
         
-        // Update parent component with user data
+        // Update user state
         if (setUser) {
           setUser(data.user);
         }
         
-        // Dispatch custom event to update navbar
+        // Dispatch user update event
         window.dispatchEvent(new CustomEvent('userUpdated', { detail: data.user }));
 
+        // Show success message and redirect
         onShowModal({
           isOpen: true,
           type: 'success',
@@ -240,6 +256,7 @@ const Auth = ({ onShowModal, setUser }) => {
           }]
         });
       } else {
+        // Show error message
         onShowModal({
           isOpen: true,
           type: 'error',
@@ -264,8 +281,6 @@ const Auth = ({ onShowModal, setUser }) => {
   };
 
   const handleGoogleLogin = () => {
-    // Google button is rendered automatically
-    // This function can be removed or used for testing
     console.log('Google button should be rendered automatically');
   };
 
@@ -273,11 +288,14 @@ const Auth = ({ onShowModal, setUser }) => {
     <div className="auth-container">
       <div className="auth-wrapper">
         <div className="auth-card">
+          {/* Page title */}
           <h1 className="auth-title">
             {isLogin ? 'Welcome Back' : 'Create Account'}
           </h1>
           
+          {/* Email/password authentication form */}
           <form onSubmit={handleSubmit} className="auth-form">
+            {/* Name fields (signup only) */}
             {!isLogin && (
               <>
                 <div className="form-row">
@@ -309,6 +327,7 @@ const Auth = ({ onShowModal, setUser }) => {
               </>
             )}
 
+            {/* Email field */}
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -322,6 +341,7 @@ const Auth = ({ onShowModal, setUser }) => {
               />
             </div>
 
+            {/* Password field */}
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
@@ -336,6 +356,7 @@ const Auth = ({ onShowModal, setUser }) => {
               {!isLogin && <small>Must be at least 6 characters</small>}
             </div>
 
+            {/* Confirm password field (signup only) */}
             {!isLogin && (
               <div className="form-group">
                 <label htmlFor="confirmPassword">Confirm Password</label>
@@ -351,6 +372,7 @@ const Auth = ({ onShowModal, setUser }) => {
               </div>
             )}
 
+            {/* Submit button */}
             <button 
               type="submit" 
               className="auth-btn"
@@ -360,12 +382,15 @@ const Auth = ({ onShowModal, setUser }) => {
             </button>
           </form>
 
+          {/* Divider */}
           <div className="divider">
             <span>or</span>
           </div>
 
+          {/* Google Sign-In button container */}
           <div id="googleButtonContainer" style={{ display: 'flex', justifyContent: 'center', margin: '15px 0' }}></div>
 
+          {/* Toggle between login/signup */}
           <p className="auth-toggle">
             {isLogin ? "Don't have an account? " : 'Already have an account? '}
             <button

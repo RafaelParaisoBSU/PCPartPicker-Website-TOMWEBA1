@@ -1,51 +1,39 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// CPUs
+// Import product images
 import cpu1 from '../assets/products/cpu1.png';
 import cpu2 from '../assets/products/cpu2.png';
 import cpu4 from '../assets/products/cpu4.png';
-
-// GPUs
 import gpu2 from '../assets/products/gpu2.png';
 import gpu4 from '../assets/products/gpu4.png';
 import gpu5 from '../assets/products/gpu5.png';
-
-// RAM
 import ram2 from '../assets/products/ram2.png';
 import ram3 from '../assets/products/ram3.png';
 import ram4 from '../assets/products/ram4.png';
-
-// Storage
 import ssd1 from '../assets/products/ssd1.png';
 import ssd2 from '../assets/products/ssd2.png';
 import ssd3 from '../assets/products/ssd3.png';
-
-// Cases
 import case3 from '../assets/products/case3.png';
 import case4 from '../assets/products/case4.png';
 import case5 from '../assets/products/case5.png';
-
-// Motherboards
 import motherboard1 from '../assets/products/motherboard1.png';
 import motherboard2 from '../assets/products/motherboard2.png';
 import motherboard4 from '../assets/products/motherboard4.png';
-
-// Coolers
 import cooler1 from '../assets/products/cooler1.png';
 import cooler2 from '../assets/products/cooler2.png';
 import cooler5 from '../assets/products/cooler5.png';
-
-// PSUs
 import psu1 from '../assets/products/psu1.png';
 import psu3 from '../assets/products/psu3.png';
 import psu5 from '../assets/products/psu5.png';
 
 import '../styles/Guides.scss';
 
+// Build guides page - displays curated PC build recommendations
 const Guides = ({ onAddToCart, onShowModal }) => {
   const location = useLocation();
 
+  // Scroll to anchor on page load if hash present
   useEffect(() => {
     if (location.hash) {
       const element = document.querySelector(location.hash);
@@ -55,6 +43,7 @@ const Guides = ({ onAddToCart, onShowModal }) => {
     }
   }, [location]);
 
+  // Build configurations data
   const builds = {
     entry: {
       title: 'Entry-Level Build',
@@ -103,11 +92,13 @@ const Guides = ({ onAddToCart, onShowModal }) => {
     }
   };
 
+  // Add all parts from a build to cart
   const handleAddBuildToCart = (buildParts) => {
     buildParts.forEach(part => {
       onAddToCart(part);
     });
     
+    // Show success modal
     if (onShowModal) {
       onShowModal({
         isOpen: true,
@@ -121,6 +112,7 @@ const Guides = ({ onAddToCart, onShowModal }) => {
 
   return (
     <div className="guides-page">
+      {/* Page header */}
       <div className="guides-header">
         <h1>PC Build Guides</h1>
         <p>Choose the perfect build for your needs and budget</p>
@@ -128,20 +120,25 @@ const Guides = ({ onAddToCart, onShowModal }) => {
 
       <div className="guides-content">
         <div className="guides-list">
+          {/* Render each build configuration */}
           {Object.entries(builds).map(([key, build]) => (
             <section key={key} id={key} className="build-section">
+              {/* Build header with title and price */}
               <div className="build-header">
                 <h2>{build.title}</h2>
                 <div className="build-price-badge">${build.totalPrice.toFixed(2)}</div>
               </div>
               <p className="build-description">{build.description}</p>
               
+              {/* Components list */}
               <div className="build-parts">
                 <h3>Components</h3>
                 <div className="parts-list">
                   {build.parts.map((part, index) => (
                     <div key={part.id || index} className="part-item">
+                      {/* Part image */}
                       <img src={part.image} alt={part.name} className="part-image" />
+                      {/* Part details */}
                       <div className="part-info">
                         <h4>{part.name}</h4>
                         <p className="part-category">{part.category}</p>
@@ -153,6 +150,7 @@ const Guides = ({ onAddToCart, onShowModal }) => {
                 </div>
               </div>
 
+              {/* Add entire build to cart button */}
               <button 
                 className="add-build-button"
                 onClick={() => handleAddBuildToCart(build.parts)}

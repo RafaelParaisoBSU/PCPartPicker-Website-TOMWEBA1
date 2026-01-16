@@ -21,7 +21,6 @@ const App = () => {
   const [modal, setModal] = useState({ isOpen: false, type: '', title: '', message: '', actions: [] });
   const [user, setUser] = useState(null);
 
-  // Load cart for current user from localStorage
   const loadCartForUser = (userEmail) => {
     if (userEmail) {
       const cartKey = `cart_${userEmail}`;
@@ -39,7 +38,6 @@ const App = () => {
     }
   };
 
-  // Save current cart to localStorage for user
   const saveCartForUser = (userEmail, items) => {
     if (userEmail) {
       const cartKey = `cart_${userEmail}`;
@@ -56,7 +54,6 @@ const App = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Load user from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -66,7 +63,6 @@ const App = () => {
     }
   }, []);
 
-  // Save cart whenever it changes and user is logged in
   useEffect(() => {
     if (user && user.email) {
       saveCartForUser(user.email, cartItems);
