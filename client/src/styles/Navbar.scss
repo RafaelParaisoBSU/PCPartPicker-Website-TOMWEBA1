@@ -17,11 +17,19 @@
     position: relative;
 
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       font-size: 1.5rem;
       font-weight: bold;
       color: variables.$accent-color;
       text-shadow: 0 0 10px rgba(variables.$accent-color, 0.3);
       z-index: 2;
+
+      img {
+        height: 40px;
+        width: auto;
+      }
     }
 
     .hamburger {

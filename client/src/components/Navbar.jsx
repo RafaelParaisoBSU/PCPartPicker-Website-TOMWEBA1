@@ -88,7 +88,8 @@ const Navbar = ({ cartComponent, user: userProp, setUser: setUserProp, onClearCa
       <div className="nav-content">
         {/* Logo */}
         <Link to="/" className="logo">
-          PCPartPicker
+          <img src="/logo.svg" alt="MyPCParts Logo" />
+          MyPCParts
         </Link>
         
         {/* Mobile hamburger menu button */}

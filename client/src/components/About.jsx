@@ -4,7 +4,7 @@ import '../styles/About.scss';
 const About = () => {
   return (
     <div className="about-container">
-      <h1>About PCPartPicker</h1>
+      <h1>About MyPCParts</h1>
       
       <div className="about-content">
         {/* Mission statement section */}
@@ -58,7 +58,7 @@ const About = () => {
         {/* Company history section */}
         <div className="about-section">
           <h2>Our Story</h2>
-          <p>Founded by PC enthusiasts in 2025, PCPartPicker has grown from a small startup to a leading destination for PC builders. We understand the importance of reliable components and exceptional service in creating the perfect custom PC.</p>
+          <p>Founded by PC enthusiasts in 2025, MyPCParts has grown from a small startup to a leading destination for PC builders. We understand the importance of reliable components and exceptional service in creating the perfect custom PC.</p>
         </div>
       </div>
     </div>

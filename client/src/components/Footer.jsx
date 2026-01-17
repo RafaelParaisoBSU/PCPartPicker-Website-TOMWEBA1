@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-content">
         {/* About section */}
         <div className="footer-section">
-          <h3>About PCPartPicker</h3>
+          <h3>About MyPCParts</h3>
           <p>Your trusted source for PC parts and custom builds since 2025.</p>
         </div>
         
@@ -35,7 +35,7 @@ const Footer = () => {
       
       {/* Copyright notice */}
       <div className="footer-bottom">
-        <p>&copy; 2025 PCPartPicker. All rights reserved.</p>
+        <p>&copy; 2025 MyPCParts. All rights reserved.</p>
       </div>
     </footer>
   );
