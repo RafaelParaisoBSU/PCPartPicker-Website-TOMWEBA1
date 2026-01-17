@@ -60,11 +60,12 @@ const Admin = ({ user, onShowModal }) => {
       message: `Are you sure you want to delete ${userName}?`,
       actions: [
         {
-          text: "Cancel",
+          label: "Cancel",
           onClick: () => onShowModal({ isOpen: false }),
         },
         {
-          text: "Delete",
+          label: "Delete",
+          primary: true,
           onClick: async () => {
             try {
               const response = await fetch(`${API_BASE_URL}/api/auth/admin/users/${userId}`, {
