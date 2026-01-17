@@ -24,6 +24,12 @@ const Navbar = ({ cartComponent, user: userProp, setUser: setUserProp, onClearCa
     }
   }, [location, userProp]);
 
+  // Close mobile menu when navigating to a new page
+  useEffect(() => {
+    setIsMenuOpen(false);
+    document.body.classList.remove('menu-open');
+  }, [location.pathname]);
+
   // Handle responsive behavior and click outside
   useEffect(() => {
     // Update mobile state on window resize
